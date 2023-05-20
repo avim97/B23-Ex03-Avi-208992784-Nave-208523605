@@ -2,10 +2,9 @@
 {
     internal enum eColor
     {
-        white,
-        black,
-        yellow,
-        red
-
+        White,
+        Black,
+        Yellow,
+        Red
     }
 }

@@ -13,5 +13,18 @@ namespace Ex03.GarageLogic.Models
         public float EnergyPercentage { get; set; }
         protected EnergySource EnergySource { get; }
         protected IList<Wheel> Wheels { get; }
+
+        public override string ToString()
+        {
+
+            return string.Format(@"Model Name: {0}
+                                License Plate: {1}
+                                Energy Percentage: {2}
+                                Energy Source: {3}
+                                number of wheels: {4}
+                                ", ModelName, LicensePlate, EnergyPercentage, EnergySource, Wheels);
+        }
+
+        //todo: add get hashcode
     }
 }

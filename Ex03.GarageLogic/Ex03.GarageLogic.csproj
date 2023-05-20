@@ -46,15 +46,18 @@
     <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\eFuelType.cs" />
+    <Compile Include="Models\ElectricBattery.cs" />
     <Compile Include="Models\eLicenseType.cs" />
     <Compile Include="Models\EnergySource.cs" />
     <Compile Include="Models\eTotalVehicleDoors.cs" />
     <Compile Include="Models\eVehicleStatus.cs" />
     <Compile Include="Models\eVehicleType.cs" />
+    <Compile Include="Models\FuelTank.cs" />
     <Compile Include="Models\Motorcycle.cs" />
     <Compile Include="Models\Truck.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\Wheel.cs" />
+    <Compile Include="VehicleFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

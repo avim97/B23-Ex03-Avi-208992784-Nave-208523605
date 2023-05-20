@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic.Models
 {
-    public enum eVehicleType
+    internal enum eVehicleType
     {
         
     }

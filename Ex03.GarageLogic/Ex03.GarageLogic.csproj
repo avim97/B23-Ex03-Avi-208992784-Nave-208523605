@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\eFuelType.cs" />
     <Compile Include="Models\EnergySource.cs" />

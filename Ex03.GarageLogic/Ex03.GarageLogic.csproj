@@ -42,9 +42,13 @@
   <ItemGroup>
     <Compile Include="Models\eColor.cs" />
     <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\eFuelType.cs" />
+    <Compile Include="Models\EnergySource.cs" />
+    <Compile Include="Models\eVehicleType.cs" />
     <Compile Include="Models\Motorcycle.cs" />
     <Compile Include="Models\Truck.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\Wheel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

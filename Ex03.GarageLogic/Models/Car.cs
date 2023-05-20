@@ -8,5 +8,6 @@ namespace Ex03.GarageLogic.Models
 {
     internal class Car
     {
+
     }
 }

@@ -10,5 +10,14 @@ namespace Ex03.GarageLogic.Models
     {
         public bool IsHazardousCargo { get; set; }
         public float CargoVolume { get; set; }
+
+
+        public override string ToString()
+        {
+            return string.Format (@"{0}
+                                    Is Hazardous Cargo: {1}
+                                    Cargo Volume: {2}
+                                    ", base.ToString(), IsHazardousCargo, CargoVolume);
+        }
     }
 }

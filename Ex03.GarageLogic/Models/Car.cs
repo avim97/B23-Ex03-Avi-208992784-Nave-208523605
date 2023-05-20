@@ -10,5 +10,14 @@ namespace Ex03.GarageLogic.Models
     {
         public eColor Color {get; set; }
         public eTotalVehicleDoors NumberOfDoors {get; set; }
+
+        //todo: add toString
+        public override string ToString()
+        {
+            string.Format(@"{0}
+                            Color: {1}
+                            Number of doors: {2}
+                            ", base.ToString(), Color, NumberOfDoors);
+        }
     }
 }

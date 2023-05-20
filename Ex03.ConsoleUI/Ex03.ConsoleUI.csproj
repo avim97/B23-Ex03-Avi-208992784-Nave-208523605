@@ -47,5 +47,8 @@
   <ItemGroup>
     <Folder Include="Exceptions\" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

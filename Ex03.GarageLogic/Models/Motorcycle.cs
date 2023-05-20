@@ -8,14 +8,31 @@ namespace Ex03.GarageLogic.Models
 {
     internal class Motorcycle : Vehicle
     {
-        public eLicenseType LicenseType { get; set; }
+        private eLicenseType m_LicenseType;
 
-        //todo: add toString
+        public eLicenseType LicenseType
+        {
+            get => m_LicenseType;
+            set
+            {
+                if(Enum.IsDefined(typeof(eLicenseType), value))
+                {
+                    m_LicenseType = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid license type");
+                }
+            }
+        }
+
         public override string ToString()
         {
-            return string.Format(@"{0}
-                            License Type: {1}
-                            ", base.ToString(), LicenseType);
+            return string.Format(
+                @"{0}
+License Type: {1}", 
+                base.ToString(), 
+                LicenseType);
         }
 
     }

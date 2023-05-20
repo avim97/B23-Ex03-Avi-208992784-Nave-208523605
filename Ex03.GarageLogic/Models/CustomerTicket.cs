@@ -7,7 +7,19 @@
         
         public eVehicleStatuses VehicleStatus { get; set; }
 
-        //todo: add get hashcode
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

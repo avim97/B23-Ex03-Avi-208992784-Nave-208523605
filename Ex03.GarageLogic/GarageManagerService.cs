@@ -7,16 +7,28 @@ namespace Ex03.GarageLogic
 {
     public class GarageManagerService
     {
-        private Dictionary<int, CustomerTicket> m_CustomersTickets;
+        private readonly Dictionary<int, CustomerTicket> m_CustomersTickets;
 
-        private Dictionary<int, Vehicle> m_Vehicles;
+        private readonly Dictionary<int,Vehicle> m_Vehicles;
 
         //todo: complete function
-        public void InsertNewVehicle(string i_licensePlate, string i_ownerName, string i_ownerPhone, Vehicle i_vehicle)
+
+        private void addVehicle(Vehicle i_VehicleToAdd)
+        {
+            m_Vehicles.Add(i_VehicleToAdd.GetHashCode(), i_VehicleToAdd);
+        }
+
+
+        public void GetVehicle(string i_LicenseNumber)
+        {
+            
+        }
+
+        public void AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_OwnerName, string i_OwnerPhone)
         {
             //if (m_Vehicles.ContainsKey(i_licensePlate))
             //{
-            //set the eVihecleStatus to InWork in the CustomerTicket
+            //set the eVehicleStatus to InWork in the CustomerTicket
             //    throw new ArgumentException("Vehicle already exists in the garage");
             //}
 

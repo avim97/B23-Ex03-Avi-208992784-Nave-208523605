@@ -16,13 +16,27 @@ namespace Ex03.GarageLogic.Models
 
         public override string ToString()
         {
-            return string.Format(@"Model Name: {0}
+            return string.Format(
+                @"Model Name: {0}
 License Plate: {1}
 Energy Percentage: {2}
 Energy Source: {3}
-number of wheels: {4}", ModelName, LicensePlate, EnergyPercentage, EnergySource, Wheels);
+number of wheels: {4}", 
+                ModelName, 
+                LicensePlate, 
+                EnergyPercentage, 
+                EnergySource, 
+                Wheels);
         }
 
-        //todo: add get hashcode
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
     }
 }

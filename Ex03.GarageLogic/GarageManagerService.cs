@@ -13,15 +13,25 @@ namespace Ex03.GarageLogic
 
         //todo: complete function
 
-        private void addVehicle(Vehicle i_VehicleToAdd)
+        //This method returns a new instance of a vehicle type from the VehicleFactory
+        // and adds the new vehicle to the garage's dictionary
+        private void createVehicle(string i_VehicleType)
         {
-            m_Vehicles.Add(i_VehicleToAdd.GetHashCode(), i_VehicleToAdd);
+            Vehicle vehicle = VehicleFactory.GetVehicle(i_VehicleType);
+            m_Vehicles.Add(vehicle.GetHashCode(), vehicle);
         }
 
-
-        public void GetVehicle(string i_LicenseNumber)
+        public void SetVehicleEnergySource(string i_LicensePlate, string i_EnergySourceType)
         {
-            
+            Vehicle vehicle = m_Vehicles[i_LicensePlate.GetHashCode()];
+
+        }
+
+        public void SetVehicleEnergySource(string i_V)
+        //This method asserts that the a vehicle is in the garage by its license plate, return true if it is, false otherwise.
+        public bool AssertVehicleInGarage(string i_LicensePlate)
+        {
+            return m_Vehicles.ContainsKey(i_LicensePlate.GetHashCode());
         }
 
         public void AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_OwnerName, string i_OwnerPhone)

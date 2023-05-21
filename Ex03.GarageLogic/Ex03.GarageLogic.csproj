@@ -45,6 +45,7 @@
     <Compile Include="Models\eColor.cs" />
     <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\eEnergySourceType.cs" />
     <Compile Include="Models\eFuelType.cs" />
     <Compile Include="Models\ElectricBattery.cs" />
     <Compile Include="Models\eLicenseType.cs" />

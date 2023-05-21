@@ -13,15 +13,18 @@ namespace Ex03.GarageLogic
 
         //todo: complete function
 
+        //This method adds the vehicle instance to the vehicles dictionary of the garage
         private void addVehicle(Vehicle i_VehicleToAdd)
         {
             m_Vehicles.Add(i_VehicleToAdd.GetHashCode(), i_VehicleToAdd);
         }
 
-
-        public void GetVehicle(string i_LicenseNumber)
+        //This method returns a new instance of a vehicle type from the VehicleFactory
+        private Vehicle createVehicle(string i_VehicleType)
         {
-            
+            Vehicle vehicle = VehicleFactory.GetVehicle(i_VehicleType);
+
+            return vehicle;
         }
 
         public void AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_OwnerName, string i_OwnerPhone)

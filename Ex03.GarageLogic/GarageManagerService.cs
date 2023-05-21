@@ -24,7 +24,7 @@ namespace Ex03.GarageLogic
         public void SetVehicleEnergySource(string i_LicensePlate, string i_EnergySourceType)
         {
             Vehicle vehicle = m_Vehicles[i_LicensePlate.GetHashCode()];
-
+            //create an enum for energysource type ?
         }
 
         public void SetVehicleEnergySource(string i_V)

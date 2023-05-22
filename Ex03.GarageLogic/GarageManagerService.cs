@@ -7,16 +7,38 @@ namespace Ex03.GarageLogic
 {
     public class GarageManagerService
     {
-        private Dictionary<int, CustomerTicket> m_CustomersTickets;
+        private readonly Dictionary<int, CustomerTicket> m_CustomersTickets;
 
-        private Dictionary<int, Vehicle> m_Vehicles;
+        private readonly Dictionary<int,Vehicle> m_Vehicles;
 
         //todo: complete function
-        public void InsertNewVehicle(string i_licensePlate, string i_ownerName, string i_ownerPhone, Vehicle i_vehicle)
+
+        //This method returns a new instance of a vehicle type from the VehicleFactory
+        // and adds the new vehicle to the garage's dictionary
+        private void createVehicle(string i_VehicleType)
+        {
+            Vehicle vehicle = VehicleFactory.GetVehicle(i_VehicleType);
+            m_Vehicles.Add(vehicle.GetHashCode(), vehicle);
+        }
+
+        public void SetVehicleEnergySource(string i_LicensePlate, string i_EnergySourceType)
+        {
+            Vehicle vehicle = m_Vehicles[i_LicensePlate.GetHashCode()];
+            //create an enum for energysource type ?
+        }
+
+        public void SetVehicleEnergySource(string i_V)
+        //This method asserts that the a vehicle is in the garage by its license plate, return true if it is, false otherwise.
+        public bool AssertVehicleInGarage(string i_LicensePlate)
+        {
+            return m_Vehicles.ContainsKey(i_LicensePlate.GetHashCode());
+        }
+
+        public void AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_OwnerName, string i_OwnerPhone)
         {
             //if (m_Vehicles.ContainsKey(i_licensePlate))
             //{
-            //set the eVihecleStatus to InWork in the CustomerTicket
+            //set the eVehicleStatus to InWork in the CustomerTicket
             //    throw new ArgumentException("Vehicle already exists in the garage");
             //}
 

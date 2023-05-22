@@ -2,6 +2,8 @@
 {
     internal enum eVehicleType
     {
-        
+        Car,
+        Truck,
+        Motorcycle
     }
 }

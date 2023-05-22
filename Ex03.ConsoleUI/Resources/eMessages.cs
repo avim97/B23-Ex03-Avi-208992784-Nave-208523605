@@ -9,10 +9,9 @@ namespace Ex03.ConsoleUI.Resources
         HelloMessage,
 
         [Description("Please choose one of the following options:")] 
-        ChooseMenu
+        ChooseMenu,
 
-        [Description("1. Insert a new vehicle to the garage")]
-        InsertNewVehicle,
+
 
     }
 }

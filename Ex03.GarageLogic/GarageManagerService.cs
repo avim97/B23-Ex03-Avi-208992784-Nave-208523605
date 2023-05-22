@@ -1,6 +1,7 @@
 ﻿using System;
 using Ex03.GarageLogic.Models;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Ex03.GarageLogic
@@ -11,40 +12,34 @@ namespace Ex03.GarageLogic
 
         private readonly Dictionary<int,Vehicle> m_Vehicles;
 
-        //todo: complete function
+        public void UpdateProperties(Dictionary<string, string> i_PropertiesToUpdate)
+        {
+            Enum.TryParse(i_PropertiesToUpdate["VehicleType"], true, out eVehicleType vehicleType);
+
+            if(vehicleType.Equals(eVehicleType.Car))
+            {
+                //UpdateCarAttributes(...)
+            }
+        }
+
+
 
         //This method returns a new instance of a vehicle type from the VehicleFactory
         // and adds the new vehicle to the garage's dictionary
-        private void createVehicle(string i_VehicleType)
-        {
-            Vehicle vehicle = VehicleFactory.GetVehicle(i_VehicleType);
-            m_Vehicles.Add(vehicle.GetHashCode(), vehicle);
-        }
-
-        public void SetVehicleEnergySource(string i_LicensePlate, string i_EnergySourceType)
-        {
-            Vehicle vehicle = m_Vehicles[i_LicensePlate.GetHashCode()];
-            //create an enum for energysource type ?
-        }
-
-        public void SetVehicleEnergySource(string i_V)
-        //This method asserts that the a vehicle is in the garage by its license plate, return true if it is, false otherwise.
         public bool AssertVehicleInGarage(string i_LicensePlate)
         {
             return m_Vehicles.ContainsKey(i_LicensePlate.GetHashCode());
         }
 
-        public void AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_OwnerName, string i_OwnerPhone)
+        //  This method returns a new instance of a vehicle type from the VehicleFactory
+        //  and adds the new vehicle to the garage's dictionary
+        public IEnumerable<string> AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_OwnerName, string i_OwnerPhone)
         {
-            //if (m_Vehicles.ContainsKey(i_licensePlate))
-            //{
-            //set the eVehicleStatus to InWork in the CustomerTicket
-            //    throw new ArgumentException("Vehicle already exists in the garage");
-            //}
+            Vehicle vehicle = VehicleFactory.GetVehicle(i_VehicleType);
+            vehicle.LicensePlate = i_LicensePlate;
+            m_Vehicles.Add(vehicle.GetHashCode(), vehicle);
 
-            // CustomerTicket customerTicket = new CustomerTicket(i_ownerName, i_ownerPhone, i_vehicle);
-            // m_CustomersTickets.Add(i_licensePlate, customerTicket);
-            // m_Vehicles.Add(i_licensePlate, i_vehicle);
+            return vehicle.GetPropertiesNames();
         }
 
         public StringBuilder GetAllVehicles()
@@ -92,19 +87,19 @@ namespace Ex03.GarageLogic
 
         //todo: complete function
 
-        public void RefuelVehicle(string i_licensePlate, eFuelTypes i_fuelType, float i_amountOfFuelToAdd)
-        {
-            // Vehicle vehicleToRefuel = m_Vehicles[Convert.ToInt32(i_licensePlate)];
-            // if(vehicleToRefuel.EnergySource is FuelSource)
-            // {
-            //     FuelSource fuelSource = vehicleToRefuel.EnergySource as FuelSource;
-            //     fuelSource.Refuel(i_fuelType, i_amountOfFuelToAdd);
-            // }
-            // else
-            // {
-            //     throw new ArgumentException("Vehicle is not fuel based");
-            // }
-        }
+        //public void FuelVehicle(string i_licensePlate, eFuelType i_fuelType, float i_amountOfFuelToAdd)
+        //{
+        //    // Vehicle vehicleToRefuel = m_Vehicles[Convert.ToInt32(i_licensePlate)];
+        //    // if(vehicleToRefuel.EnergySource is FuelSource)
+        //    // {
+        //    //     FuelSource fuelSource = vehicleToRefuel.EnergySource as FuelSource;
+        //    //     fuelSource.Refuel(i_fuelType, i_amountOfFuelToAdd);
+        //    // }
+        //    // else
+        //    // {
+        //    //     throw new ArgumentException("Vehicle is not fuel based");
+        //    // }
+        //}
 
 
         //todo: complete function

@@ -10,86 +10,108 @@ namespace Ex03.GarageLogic
     {
         private readonly Dictionary<int, CustomerTicket> m_CustomersTickets;
 
-        private readonly Dictionary<int,Vehicle> m_Vehicles;
+        private readonly Dictionary<int, Vehicle> m_Vehicles;
 
-        public void UpdateProperties(Dictionary<string, string> i_PropertiesToUpdate)
+        public GarageManagerService()
         {
-            Enum.TryParse(i_PropertiesToUpdate["VehicleType"], true, out eVehicleType vehicleType);
+            m_CustomersTickets = new Dictionary<int, CustomerTicket>();
+            m_Vehicles = new Dictionary<int, Vehicle>();
+        }
 
-            if(vehicleType.Equals(eVehicleType.Car))
+        public void UpdateProperties(string i_LicensePlate, Dictionary<string, string> i_PropertiesToUpdate)
+        {
+            //Enum.TryParse(i_PropertiesToUpdate["VehicleType"], true, out eVehicleType vehicleType);
+
+            //if(vehicleType.Equals(eVehicleType.Car))
+            //{
+            //    //UpdateCarAttributes(...)                check if needed
+            //}
+
+            if (IsVehicleInGarage(i_LicensePlate))
             {
-                //UpdateCarAttributes(...)
+                this.m_Vehicles[i_LicensePlate.GetHashCode()].UpdateProperties(i_PropertiesToUpdate);
+            }
+            else
+            {
+                throw new ArgumentException("A Vehicle with the entered license plate is not found");
             }
         }
 
-
-
         //This method returns a new instance of a vehicle type from the VehicleFactory
         // and adds the new vehicle to the garage's dictionary
-        public bool AssertVehicleInGarage(string i_LicensePlate)
+        public bool IsVehicleInGarage(string i_LicensePlate)
         {
             return m_Vehicles.ContainsKey(i_LicensePlate.GetHashCode());
         }
 
         //  This method returns a new instance of a vehicle type from the VehicleFactory
         //  and adds the new vehicle to the garage's dictionary
-        public IEnumerable<string> AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_OwnerName, string i_OwnerPhone)
+        public IEnumerable<string> AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_CustomerName, string i_CustomerPhoneNumber)
         {
             Vehicle vehicle = VehicleFactory.GetVehicle(i_VehicleType);
+            CustomerTicket customerTicket = new CustomerTicket
+            {
+                CustomerName = i_CustomerName,
+                CustomerPhone = i_CustomerPhoneNumber,
+                VehicleStatus = eVehicleStatuses.InWork
+            };
+
             vehicle.LicensePlate = i_LicensePlate;
             m_Vehicles.Add(vehicle.GetHashCode(), vehicle);
+            m_CustomersTickets.Add(vehicle.GetHashCode(), customerTicket);
 
             return vehicle.GetPropertiesNames();
         }
 
-        public StringBuilder GetAllVehicles()
+        public string GetAllVehicles()
         {
             StringBuilder allVehicles = new StringBuilder();
-            foreach(KeyValuePair<int, Vehicle> vehicle in m_Vehicles)
+
+            foreach (KeyValuePair<int, Vehicle> vehicle in m_Vehicles)
             {
                 allVehicles.AppendLine(vehicle.Value.ToString());
             }
 
-            return allVehicles;
+            return allVehicles.ToString();
         }
 
-        public StringBuilder GetAllLicensePlatesByStatus(eVehicleStatuses i_vehicleStatus)
+        public string GetAllLicensePlatesByStatus(eVehicleStatuses i_VehicleStatusToFilter)
         {
             StringBuilder allLicensePlates = new StringBuilder();
-            foreach(KeyValuePair<int, CustomerTicket> customerTicket in m_CustomersTickets)
+
+            foreach (KeyValuePair<int, CustomerTicket> customerTicket in m_CustomersTickets)
             {
-                if(customerTicket.Value.VehicleStatus == i_vehicleStatus)
+                if (customerTicket.Value.VehicleStatus == i_VehicleStatusToFilter)
                 {
                     allLicensePlates.AppendLine(customerTicket.Key.ToString());
                 }
             }
 
-            return allLicensePlates;
+            return allLicensePlates.ToString();
         }
 
-        public void ChangeVehicleStatus(string i_licensePlate, eVehicleStatuses i_vehicleStatus)
+        public void ChangeVehicleStatus(string i_LicensePlate, eVehicleStatuses i_VehicleStatus) //TODO
         {
-            CustomerTicket ticketToChangeStatus = m_CustomersTickets[Convert.ToInt32(i_licensePlate)];
-            ticketToChangeStatus.VehicleStatus = i_vehicleStatus;
+            CustomerTicket ticketToChangeStatus = m_CustomersTickets[Convert.ToInt32(i_LicensePlate)];
+            ticketToChangeStatus.VehicleStatus = i_VehicleStatus;
+        }
+
+
+        public void InflateWheelsToMax(string i_licensePlate) //TODO
+        {
+            //Vehicle vehicleToInflate = m_Vehicles[Convert.ToInt32(i_LicensePlate)];
+            //foreach (Wheel wheel in vehicleToInflate.Wheels)
+            //{
+            //    wheel.InflateWheel(wheel.MaxAirPressure - wheel.CurrentAirPressure);
+            //}
         }
 
 
         //todo: complete function
-        public void InflateWheelsToMax(string i_licensePlate)
-        {
-            // Vehicle vehicleToInflate = m_Vehicles[Convert.ToInt32(i_licensePlate)];
-            // foreach(Wheel wheel in vehicleToInflate.Wheels)
-            // {
-            //     wheel.InflateWheel(wheel.MaxAirPressure - wheel.CurrentAirPressure);
-            // }
-        }
 
-
-        //todo: complete function
-
-        //public void FuelVehicle(string i_licensePlate, eFuelType i_fuelType, float i_amountOfFuelToAdd)
+        //public void FuelVehicle(string i_LicensePlate, eFuelType i_fuelType, float i_amountOfFuelToAdd)
         //{
-        //    // Vehicle vehicleToRefuel = m_Vehicles[Convert.ToInt32(i_licensePlate)];
+        //    // Vehicle vehicleToRefuel = m_Vehicles[Convert.ToInt32(i_LicensePlate)];
         //    // if(vehicleToRefuel.EnergySource is FuelSource)
         //    // {
         //    //     FuelSource fuelSource = vehicleToRefuel.EnergySource as FuelSource;
@@ -106,7 +128,7 @@ namespace Ex03.GarageLogic
 
         public void ChargeVehicle(string i_licensePlate, float i_amountOfMinutesToAdd)
         {
-            // Vehicle vehicleToCharge = m_Vehicles[Convert.ToInt32(i_licensePlate)];
+            // Vehicle vehicleToCharge = m_Vehicles[Convert.ToInt32(i_LicensePlate)];
             // if(vehicleToCharge.EnergySource is ElectricSource)
             // {
             //     ElectricSource electricSource = vehicleToCharge.EnergySource as ElectricSource;

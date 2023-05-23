@@ -17,7 +17,7 @@ namespace Ex03.ConsoleUI.Controller
             while(isRunning)
             {
                 displayMessage(eMessages.HelloMessage);
-                displayMessage(eMessages.ShowMenu);
+                //displayMessage(eMessages.ShowMenu);
             }
             //hello message
             //show menu

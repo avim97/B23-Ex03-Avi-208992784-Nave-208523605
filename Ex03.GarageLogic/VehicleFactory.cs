@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ex03.GarageLogic.Models;
 
 
@@ -9,6 +10,7 @@ namespace Ex03.GarageLogic
         public static Vehicle GetVehicle(string i_VehicleType)
         {
             Vehicle vehicle = null;
+
             Enum.TryParse(i_VehicleType, ignoreCase: true, out eVehicleType vehicleType);
 
             if (vehicleType.Equals(eVehicleType.Car))
@@ -25,6 +27,25 @@ namespace Ex03.GarageLogic
             }
 
             return vehicle;
+        }
+
+        private static EnergySource getEnergySource(string i_EnergySourceType)
+        {
+
+            EnergySource energySourceToSet = null;
+
+            Enum.TryParse(i_EnergySourceType, ignoreCase: true, out eEnergySourceType energySourceType);
+
+            if (energySourceType.Equals(eEnergySourceType.Electric))
+            {
+                energySourceToSet = new ElectricBattery();
+            }
+            else if (energySourceType.Equals(eEnergySourceType.Fuel))
+            {
+                energySourceToSet = new FuelTank();
+            }
+
+            return energySourceToSet;
         }
     }
 }

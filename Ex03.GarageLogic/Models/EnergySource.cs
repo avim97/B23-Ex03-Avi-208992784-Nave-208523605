@@ -9,13 +9,14 @@ namespace Ex03.GarageLogic.Models
         protected float m_EnergyAmountLeft;
         protected readonly float r_Capacity;
 
+        protected EnergySource() { }
         protected EnergySource(float i_Capacity)
         {
             m_EnergyAmountLeft = 0;
             r_Capacity = i_Capacity;
         }
 
-        protected float EnergyPercentage
+        public float EnergyPercentage
         {
             get
             {

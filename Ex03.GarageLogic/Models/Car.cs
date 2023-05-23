@@ -11,12 +11,12 @@ namespace Ex03.GarageLogic.Models
         private eColor m_Color;
         private eTotalVehicleDoors m_NumDoors;
 
-        public eColor Color
+        internal eColor Color
         {
             get => m_Color;
             set
             {
-                if(Enum.IsDefined(typeof(eColor), value))
+                if (Enum.IsDefined(typeof(eColor), value))
                 {
                     m_Color = value;
                 }
@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic.Models
             get => m_NumDoors;
             set
             {
-                if(Enum.IsDefined(typeof(eTotalVehicleDoors), value))
+                if (Enum.IsDefined(typeof(eTotalVehicleDoors), value))
                 {
                     m_NumDoors = value;
                 }
@@ -50,9 +50,9 @@ namespace Ex03.GarageLogic.Models
             return string.Format(
                 @"{0}
 Color: {1}
-Number of doors: {2}", 
-                base.ToString(), 
-                Color, 
+Number of doors: {2}",
+                base.ToString(),
+                Color,
                 NumberOfDoors);
         }
     }

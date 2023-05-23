@@ -10,6 +10,8 @@ namespace Ex03.GarageLogic.Models
     {
         private readonly eFuelType m_FuelType;
 
+        public FuelTank() { }
+
         public FuelTank(eFuelType i_FuelType, float i_TankCapacity)
         : base(i_TankCapacity)
         {

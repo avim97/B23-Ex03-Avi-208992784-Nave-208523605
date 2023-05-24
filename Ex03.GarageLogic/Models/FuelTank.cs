@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic.Models
             return isSameType;
         }
 
-        public void FillTank(int i_LitersToAdd, eFuelType i_FuelType)
+        public void FillTank(float i_LitersToAdd, eFuelType i_FuelType)
         {
             bool isSameFuelType = validateFuelType(i_FuelType);
 
@@ -35,7 +35,7 @@ namespace Ex03.GarageLogic.Models
             }
             else
             {
-                throw new ArgumentException("Invalid fuel type");
+                throw new ArgumentException("Vehicle fuel type does not match");
             }
         }
     }

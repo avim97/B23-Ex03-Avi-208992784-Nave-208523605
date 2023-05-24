@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic.Models
     {
         public string Manufacturer { get; private set; }
         public float MaxPressure { get; private set; }
-        public float CurrentPressure { get; private set; }
+        public float CurrentPressure { get; internal set; }
 
         internal void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary)
         {

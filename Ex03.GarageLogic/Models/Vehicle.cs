@@ -25,11 +25,19 @@ namespace Ex03.GarageLogic.Models
             }
             else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(EnergySource)))
             {
-               //update energy source accordingly 
+                //update energy source accordingly 
             }
-            else if(i_PropertiesToUpdateDictionary.ContainsKey(nameof(Wheels)))
+            else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(Wheels)))
             {
-                //update Wheels accordingly 
+
+            }
+        }
+
+        public virtual void InflateWheelsToMax()
+        {
+            foreach(Wheel wheel in Wheels)
+            {
+                wheel.CurrentPressure = wheel.MaxPressure;
             }
         }
 
@@ -37,10 +45,10 @@ namespace Ex03.GarageLogic.Models
         {
             Type type = GetType();
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            
+
             List<string> propertiesNames = new List<string>();
 
-            foreach(PropertyInfo property in properties)
+            foreach (PropertyInfo property in properties)
             {
                 propertiesNames.Add(property.Name);
             }

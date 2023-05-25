@@ -15,15 +15,24 @@ namespace Ex03.GarageLogic
 
             if (vehicleType.Equals(eVehicleType.Car))
             {
-                vehicle = new Car();
+                const int k_NumWheels = 5;
+                const float k_MaxWheelsPressure = 33f;
+
+                vehicle = new Car(k_NumWheels, k_MaxWheelsPressure);
             }
             else if (vehicleType.Equals(eVehicleType.Motorcycle))
             {
-                vehicle = new Motorcycle();
+                const int k_NumWheels = 2;
+                const float k_MaxWheelsPressure = 31f;
+
+                vehicle = new Motorcycle(k_NumWheels, k_MaxWheelsPressure);
             }
             else if (vehicleType.Equals(eVehicleType.Truck))
             {
-                vehicle = new Truck();
+                const int k_NumWheels = 14;
+                const float k_MaxWheelsPressure = 26f;
+
+                vehicle = new Truck(k_NumWheels, k_MaxWheelsPressure);
             }
 
             return vehicle;

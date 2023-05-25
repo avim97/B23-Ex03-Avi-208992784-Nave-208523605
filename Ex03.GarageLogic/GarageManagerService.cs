@@ -112,15 +112,13 @@ namespace Ex03.GarageLogic
 
             if (isExistingFuelType)
             {
-                if (vehicleToFuel.EnergySource is FuelTank)
+                if (vehicleToFuel.EnergySource is FuelTank fuelTank)
                 {
-                    FuelTank fuelTank = vehicleToFuel.EnergySource as FuelTank;
-
                     float.TryParse(i_FuelAmountToAdd, out float fuelAmountToAdd);
 
                     if (fuelAmountToAdd > 0)
                     {
-                        fuelTank?.FillTank(fuelAmountToAdd, fuelType);
+                        fuelTank.FillTank(fuelAmountToAdd, fuelType);
                     }
 
                 }
@@ -139,21 +137,19 @@ namespace Ex03.GarageLogic
         {
             Vehicle vehicleToCharge = m_Vehicles[i_LicensePlate.GetHashCode()];
 
-            if (vehicleToCharge.EnergySource is ElectricBattery)
-                {
-                    ElectricBattery electricBattery = vehicleToCharge.EnergySource as ElectricBattery;
+            if (vehicleToCharge.EnergySource is ElectricBattery electricBattery)
+            {
+                float.TryParse(i_ChargingTimeToAdd, out float chargingTimeToAdd);
 
-                    float.TryParse(i_ChargingTimeToAdd, out float chargingTimeToAdd);
-
-                    if (chargingTimeToAdd > 0)
-                    {
-                        electricBattery?.ChargeBattery(chargingTimeToAdd);
-                    }
-                }
-                else
+                if (chargingTimeToAdd > 0)
                 {
-                    throw new ArgumentException("Vehicle selected energy source is not  based");
+                    electricBattery.ChargeBattery(chargingTimeToAdd);
                 }
+            }
+            else
+            {
+                throw new ArgumentException("Vehicle selected energy source is not  based");
+            }
         }
 
         public StringBuilder GetVehicleDetails(string i_licensePlate) //TODO

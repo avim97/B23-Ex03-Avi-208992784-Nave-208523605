@@ -17,6 +17,15 @@ namespace Ex03.GarageLogic.Models
         public EnergySource EnergySource { get; set; }
         public float EnergyPercentage => this.EnergySource.EnergyPercentage;
 
+        protected Vehicle(int i_NumWheels, float i_WheelMaxPressure)
+        {
+            Wheels = new List<Wheel>(i_NumWheels);
+
+            foreach(Wheel wheel in Wheels)
+            {
+                wheel.MaxPressure = i_WheelMaxPressure;
+            }
+        }
         public virtual void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary)
         {
             if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(ModelName)))
@@ -26,10 +35,6 @@ namespace Ex03.GarageLogic.Models
             else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(EnergySource)))
             {
                 //update energy source accordingly 
-            }
-            else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(Wheels)))
-            {
-
             }
         }
 

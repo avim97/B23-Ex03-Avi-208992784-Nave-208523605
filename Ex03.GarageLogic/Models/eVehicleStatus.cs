@@ -2,8 +2,7 @@
 
 namespace Ex03.GarageLogic.Models
 {
-    [Flags]
-    public enum eVehicleStatuses
+    public enum eVehicleStatus
     {
         InWork,
         Fixed,

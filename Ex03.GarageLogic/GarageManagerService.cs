@@ -50,13 +50,18 @@ namespace Ex03.GarageLogic
         public IEnumerable<string> AddNewVehicle(string i_VehicleType, string i_LicensePlate, string i_CustomerName, string i_CustomerPhoneNumber)
         {
             Vehicle vehicle = VehicleFactory.GetVehicle(i_VehicleType);
-            CustomerTicket customerTicket = new CustomerTicket
-            {
-                CustomerName = i_CustomerName,
-                CustomerPhone = i_CustomerPhoneNumber,
-                VehicleStatus = eVehicleStatuses.InWork
-            };
 
+            if(vehicle == null)
+            {
+                throw new ArgumentException("Invalid vehicle type");
+            }
+
+            CustomerTicket customerTicket = new CustomerTicket
+                                                {
+                                                    CustomerName = i_CustomerName,
+                                                    CustomerPhone = i_CustomerPhoneNumber,
+                                                    VehicleStatus = eVehicleStatus.InWork
+                                                };
             vehicle.LicensePlate = i_LicensePlate;
             m_Vehicles.Add(vehicle.GetHashCode(), vehicle);
             m_CustomersTickets.Add(vehicle.GetHashCode(), customerTicket);
@@ -76,7 +81,7 @@ namespace Ex03.GarageLogic
             return allVehicles.ToString();
         }
 
-        public string GetAllLicensePlatesByStatus(eVehicleStatuses i_VehicleStatusToFilter)
+        public string GetAllLicensePlatesByStatus(eVehicleStatus i_VehicleStatusToFilter)
         {
             StringBuilder allLicensePlates = new StringBuilder();
 
@@ -91,7 +96,7 @@ namespace Ex03.GarageLogic
             return allLicensePlates.ToString();
         }
 
-        public void ChangeVehicleStatus(string i_LicensePlate, eVehicleStatuses i_VehicleStatus) //TODO
+        public void ChangeVehicleStatus(string i_LicensePlate, eVehicleStatus i_VehicleStatus) //TODO
         {
             CustomerTicket ticketToChangeStatus = m_CustomersTickets[Convert.ToInt32(i_LicensePlate)];
             ticketToChangeStatus.VehicleStatus = i_VehicleStatus;
@@ -159,5 +164,24 @@ namespace Ex03.GarageLogic
             vehicleDetails.AppendLine(m_CustomersTickets[Convert.ToInt32(i_licensePlate)].ToString());
             return vehicleDetails;
         }
+
+        public void SetVehicleStatus(string i_LicensePlate, string i_VehicleStatus)
+        {
+            CustomerTicket customersTicket = m_CustomersTickets[i_LicensePlate.GetHashCode()];
+            Enum.TryParse(i_VehicleStatus, out eVehicleStatus vehicleStatus);
+            if (IsVehicleInGarage(i_LicensePlate))
+            {
+                customersTicket.VehicleStatus = vehicleStatus;
+            }
+            else
+            {
+                throw new ArgumentException("A Vehicle with the entered license plate is not found");
+            }
+        }
+
+
+
+
+
     }
 }

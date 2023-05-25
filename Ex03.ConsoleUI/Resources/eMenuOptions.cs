@@ -5,6 +5,7 @@ namespace Ex03.ConsoleUI.Resources
 {
     public enum eMenuOptions
     {
+        [Description("\n")]
         None = 0,
         [Description("1. Insert a new vehicle to the garage")]
         ChooseToInsertNewVehicle,

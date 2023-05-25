@@ -175,7 +175,7 @@ namespace Ex03.GarageLogic
 
         private eVehicleStatus parseVehicleStatus(string i_VehicleStatus)
         {
-            Enum.TryParse(i_VehicleStatus, out eVehicleStatus vehicleStatus);
+            Enum.TryParse(i_VehicleStatus,ignoreCase:true, out eVehicleStatus vehicleStatus);
             if(vehicleStatus.Equals(eVehicleStatus.None))
             {
                 throw new FormatException("invalid status");
@@ -184,6 +184,24 @@ namespace Ex03.GarageLogic
             {
                 return vehicleStatus;
             }
+        }
+
+        public string GetSupportedVehiclesNames()
+        {
+            StringBuilder supportedVehicles = new StringBuilder();
+            foreach (Enum vehicleType in Enum.GetValues(typeof(eVehicleType)))
+            {
+
+                if(vehicleType.ToString() == "None")
+                {
+                    continue;
+                }
+
+                supportedVehicles.Append(string.Format(@" {0} ", vehicleType.ToString()));
+            }
+
+
+            return supportedVehicles.ToString();
         }
 
 

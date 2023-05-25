@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic.Models
         public Motorcycle(int i_NumWheels, float i_WheelMaxPressure)
             : base(i_NumWheels, i_WheelMaxPressure) { }
 
-        internal eLicenseType LicenseType
+        public eLicenseType LicenseType
         {
             get => m_LicenseType;
             set

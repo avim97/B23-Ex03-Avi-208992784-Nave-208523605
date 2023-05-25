@@ -38,14 +38,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="Models\CustomerTicket.cs" />
     <Compile Include="GarageManagerService.cs" />
     <Compile Include="Models\eColor.cs" />
     <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\eEnergySourceType.cs" />
     <Compile Include="Models\eFuelType.cs" />
     <Compile Include="Models\ElectricBattery.cs" />
     <Compile Include="Models\eLicenseType.cs" />
@@ -59,6 +57,9 @@
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\Wheel.cs" />
     <Compile Include="VehicleFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

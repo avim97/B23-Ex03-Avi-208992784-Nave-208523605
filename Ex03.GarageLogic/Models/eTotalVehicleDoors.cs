@@ -2,7 +2,8 @@
 {
     internal enum eTotalVehicleDoors
     {
-        Two,
+        
+        Two = 2,
         Three,
         Four,
         Five

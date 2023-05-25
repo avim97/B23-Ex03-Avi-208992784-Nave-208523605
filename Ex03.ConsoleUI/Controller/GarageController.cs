@@ -37,7 +37,7 @@ namespace Ex03.ConsoleUI.Controller
 
                 else if(serviceOptionToInvoke == eMenuOptions.ChooseToShowAllLicensePlates)
                 {
-                    // handleShowAllLicensePlates();
+                    handleShowAllLicensePlatesByStatus();
                 }
                 else if(serviceOptionToInvoke == eMenuOptions.ChooseToChangeVehicleStatus)
                 {
@@ -57,6 +57,12 @@ namespace Ex03.ConsoleUI.Controller
             //switch case
 
             //exit message
+        }
+
+        private void handleShowAllLicensePlatesByStatus()
+        {
+            string licensePlate = getLicensePlateFromUser();
+            displayMessage(r_GarageManagerService.GetAllLicensePlatesByStatus(licensePlate));
         }
 
         private void handleChangeVehicleStatus()
@@ -88,18 +94,7 @@ namespace Ex03.ConsoleUI.Controller
 
         }
 
-        private void handleNumericInput(string i_UserInputToValidate, out int o_UserInputAsInt)
-        {
 
-            bool isUserInputNumeric = Int32.TryParse(i_UserInputToValidate, out int userInputAsInt);
-
-            while(!isUserInputNumeric)
-            {
-                displayMessage(eUserMessages.InvalidInputMessage);
-            }
-            o_UserInputAsInt = userInputAsInt;
-
-        }
 
         private eMenuOptions getMenuOptionFromUser()
         {
@@ -159,7 +154,6 @@ namespace Ex03.ConsoleUI.Controller
 
         }
 
-
         private void getUserInput(out string o_UserInput)
         {
             o_UserInput = Console.ReadLine();
@@ -206,6 +200,7 @@ namespace Ex03.ConsoleUI.Controller
                 {
                     Console.WriteLine("\n");
                     displayMessage(eUserMessages.EnterVehicleTypeMessage);
+                    displayMessage(r_GarageManagerService.GetSupportedVehiclesNames());
                     string vehicleType = Console.ReadLine();
                     displayMessage(eUserMessages.EnterCustomerNameMessage);
                     string customerName = Console.ReadLine();

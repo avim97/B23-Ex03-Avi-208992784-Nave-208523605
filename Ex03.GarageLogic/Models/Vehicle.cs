@@ -63,7 +63,8 @@ namespace Ex03.GarageLogic.Models
                 propertiesNames.Add(property.Name);
             }
 
-            propertiesNames.Concat(Wheels.First().GetPropertiesNames());
+            Wheel wheel = new Wheel();
+            propertiesNames.Concat(wheel.GetPropertiesNames());
 
             return propertiesNames;
         }

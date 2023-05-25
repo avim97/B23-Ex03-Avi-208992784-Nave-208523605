@@ -6,9 +6,9 @@ namespace Ex03.GarageLogic.Models
 {
     internal class Wheel
     {
-        public string Manufacturer { get; private set; }
-        public float MaxPressure { get; private set; }
-        public float CurrentPressure { get; private set; }
+        internal float MaxPressure { get; set; }
+        public string Manufacturer { get; internal set; }
+        public float CurrentPressure { get; internal set; }
 
         internal void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary)
         {
@@ -16,13 +16,11 @@ namespace Ex03.GarageLogic.Models
             {
                 Manufacturer = i_PropertiesToUpdateDictionary[nameof(Manufacturer)];
             }
-            else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(MaxPressure)))
-            {
-                MaxPressure = float.Parse(i_PropertiesToUpdateDictionary[nameof(MaxPressure)]);
-            }
             else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(CurrentPressure)))
             {
-                CurrentPressure = float.Parse(i_PropertiesToUpdateDictionary[nameof(CurrentPressure)]);
+                float airVolumeToAdd = float.Parse(i_PropertiesToUpdateDictionary[nameof(CurrentPressure)]);
+
+                Inflate(airVolumeToAdd);
             }
         }
 

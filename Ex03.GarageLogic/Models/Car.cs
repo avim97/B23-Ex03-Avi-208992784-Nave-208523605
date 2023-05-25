@@ -11,7 +11,10 @@ namespace Ex03.GarageLogic.Models
         private eColor m_Color;
         private eTotalVehicleDoors m_NumDoors;
 
-        internal eColor Color
+        public Car(int i_NumWheels, float i_WheelMaxPressure)
+            : base(i_NumWheels, i_WheelMaxPressure) { }
+
+        public eColor Color
         {
             get => m_Color;
             set
@@ -27,7 +30,6 @@ namespace Ex03.GarageLogic.Models
             }
 
         }
-
         public eTotalVehicleDoors NumberOfDoors
         {
             get => m_NumDoors;
@@ -44,7 +46,27 @@ namespace Ex03.GarageLogic.Models
             }
         }
 
-        //todo: add toString
+        public override void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary)
+        {
+            base.UpdateProperties(i_PropertiesToUpdateDictionary);
+
+            if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(Color)))
+            {
+                Enum.TryParse(i_PropertiesToUpdateDictionary[nameof(Color)], out eColor colorToSet);
+
+                this.Color = colorToSet;
+            }
+            else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(NumberOfDoors)))
+            {
+                Enum.TryParse(
+                    i_PropertiesToUpdateDictionary[nameof(NumberOfDoors)], 
+                    out eTotalVehicleDoors totalVehicleDoors);
+
+                this.NumberOfDoors = totalVehicleDoors;
+            }
+        }
+
+
         public override string ToString()
         {
             return string.Format(

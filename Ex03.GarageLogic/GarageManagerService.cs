@@ -1,6 +1,7 @@
 ﻿using System;
 using Ex03.GarageLogic.Models;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 
@@ -96,54 +97,62 @@ namespace Ex03.GarageLogic
             ticketToChangeStatus.VehicleStatus = i_VehicleStatus;
         }
 
-
-        public void InflateWheelsToMax(string i_licensePlate) //TODO
+        public void InflateVehicleWheelsToMax(string i_LicensePlate) //TODO
         {
-            //Vehicle vehicleToInflate = m_Vehicles[Convert.ToInt32(i_LicensePlate)];
-            //foreach (Wheel wheel in vehicleToInflate.Wheels)
-            //{
-            //    wheel.InflateWheel(wheel.MaxAirPressure - wheel.CurrentAirPressure);
-            //}
+            Vehicle vehicleToInflate = m_Vehicles[i_LicensePlate.GetHashCode()];
+
+            vehicleToInflate.InflateWheelsToMax();
         }
 
-
-        //todo: complete function
-
-        //public void FuelVehicle(string i_LicensePlate, eFuelType i_fuelType, float i_amountOfFuelToAdd)
-        //{
-        //    // Vehicle vehicleToRefuel = m_Vehicles[Convert.ToInt32(i_LicensePlate)];
-        //    // if(vehicleToRefuel.EnergySource is FuelSource)
-        //    // {
-        //    //     FuelSource fuelSource = vehicleToRefuel.EnergySource as FuelSource;
-        //    //     fuelSource.Refuel(i_fuelType, i_amountOfFuelToAdd);
-        //    // }
-        //    // else
-        //    // {
-        //    //     throw new ArgumentException("Vehicle is not fuel based");
-        //    // }
-        //}
-
-
-        //todo: complete function
-
-        public void ChargeVehicle(string i_licensePlate, float i_amountOfMinutesToAdd)
+        public void FuelVehicle(string i_LicensePlate, string i_FuelType, string i_FuelAmountToAdd)
         {
-            // Vehicle vehicleToCharge = m_Vehicles[Convert.ToInt32(i_LicensePlate)];
-            // if(vehicleToCharge.EnergySource is ElectricSource)
-            // {
-            //     ElectricSource electricSource = vehicleToCharge.EnergySource as ElectricSource;
-            //     electricSource.Charge(i_amountOfMinutesToAdd);
-            // }
-            // else
-            // {
-            //     throw new ArgumentException("Vehicle is not electric based");
-            // }
+            Vehicle vehicleToFuel = m_Vehicles[i_LicensePlate.GetHashCode()];
+
+            bool isExistingFuelType = Enum.TryParse(i_FuelType, ignoreCase: true, out eFuelType fuelType);
+
+            if (isExistingFuelType)
+            {
+                if (vehicleToFuel.EnergySource is FuelTank fuelTank)
+                {
+                    float.TryParse(i_FuelAmountToAdd, out float fuelAmountToAdd);
+
+                    if (fuelAmountToAdd > 0)
+                    {
+                        fuelTank.FillTank(fuelAmountToAdd, fuelType);
+                    }
+
+                }
+                else
+                {
+                    throw new ArgumentException("Vehicle selected energy source is not fuel based");
+                }
+            }
+            else
+            {
+                throw new FormatException("Fuel type does not exist");
+            }
         }
 
+        public void ChargeVehicle(string i_LicensePlate, string i_ChargingTimeToAdd)
+        {
+            Vehicle vehicleToCharge = m_Vehicles[i_LicensePlate.GetHashCode()];
 
-        //todo: complete function
+            if (vehicleToCharge.EnergySource is ElectricBattery electricBattery)
+            {
+                float.TryParse(i_ChargingTimeToAdd, out float chargingTimeToAdd);
 
-        public StringBuilder GetVehicleDetails(string i_licensePlate)
+                if (chargingTimeToAdd > 0)
+                {
+                    electricBattery.ChargeBattery(chargingTimeToAdd);
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Vehicle selected energy source is not  based");
+            }
+        }
+
+        public StringBuilder GetVehicleDetails(string i_licensePlate) //TODO
         {
             StringBuilder vehicleDetails = new StringBuilder();
             vehicleDetails.AppendLine(m_Vehicles[Convert.ToInt32(i_licensePlate)].ToString());

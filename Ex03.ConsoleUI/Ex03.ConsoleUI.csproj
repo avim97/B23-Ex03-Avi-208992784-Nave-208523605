@@ -37,9 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\GarageController.cs" />
-    <Compile Include="eMenuOptions.cs" />
+    <Compile Include="Resources\eMenuOptions.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Resources\eMessages.cs" />
+    <Compile Include="Resources\eUserMessages.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex03.GarageLogic\Ex03.GarageLogic.csproj">

@@ -1,37 +1,40 @@
-﻿using System.Dynamic;
+﻿using System;
+using System.Collections.Generic;
 using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.GarageLogic.Models
 {
     internal class Wheel
     {
-        public string Manufacturer { get; }
-        private float m_CurrentPressure;
-        private readonly float r_MaxPressure;
+        internal float MaxPressure { get; set; }
+        public string Manufacturer { get; internal set; }
+        public float CurrentPressure { get; internal set; }
 
-        public Wheel(string i_Manufacturer, float i_MaxPressure)
+        internal void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary)
         {
-            Manufacturer = i_Manufacturer;
-            this.r_MaxPressure = i_MaxPressure;
-            m_CurrentPressure = 0;
-        }
-
-        public float CurrentPressure
-        {
-            get => m_CurrentPressure;
-            set
+            if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(Manufacturer)))
             {
-                if (value + m_CurrentPressure <= r_MaxPressure)
-                {
-                    m_CurrentPressure += value;
-                }
-                else
-                {
-                    const float k_MinPressure = 0;
-                    throw new ValueOutOfRangeException(k_MinPressure, r_MaxPressure);
-                }
+                Manufacturer = i_PropertiesToUpdateDictionary[nameof(Manufacturer)];
+            }
+            else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(CurrentPressure)))
+            {
+                float airVolumeToAdd = float.Parse(i_PropertiesToUpdateDictionary[nameof(CurrentPressure)]);
+
+                Inflate(airVolumeToAdd);
             }
         }
 
+        internal void Inflate(float i_AirVolumeToAdd)
+        {
+            if (i_AirVolumeToAdd + CurrentPressure <= MaxPressure)
+            {
+                CurrentPressure += i_AirVolumeToAdd;
+            }
+            else
+            {
+                const float k_MinPressure = 0;
+                throw new ValueOutOfRangeException(k_MinPressure, MaxPressure);
+            }
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace Ex03.ConsoleUI.Resources
         EnterCustomerNameMessage,
         [Description("Please enter your phone number:")]
         EnterCustomerPhoneNumberMessage,
-
+        [Description("Ivalid input!")]
+        InvalidInputMessage
     }
 }

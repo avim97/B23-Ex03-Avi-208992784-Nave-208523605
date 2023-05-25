@@ -33,8 +33,18 @@ namespace Ex03.ConsoleUI.Controller
                 if (serviceOptionToInvoke == eMenuOptions.ChooseToInsertNewVehicle)
                 {
                     handleVehicleInsertion();
-
                 }
+
+                else if(serviceOptionToInvoke == eMenuOptions.ChooseToShowAllLicensePlates)
+                {
+                    // handleShowAllLicensePlates();
+                }
+                else if(serviceOptionToInvoke == eMenuOptions.ChooseToChangeVehicleStatus)
+                {
+                    handleChangeVehicleStatus();
+                }
+
+                
 
                 Console.ReadKey();
 
@@ -49,6 +59,36 @@ namespace Ex03.ConsoleUI.Controller
             //exit message
         }
 
+        private void handleChangeVehicleStatus()
+        {
+            string licensePlate = getLicensePlateFromUser();
+            string invalidInputMessage = "Invalid input, vehicle not exist, please try again";
+            while(!r_GarageManagerService.IsVehicleInGarage(licensePlate))
+            {
+                displayMessage(invalidInputMessage);
+                licensePlate = getLicensePlateFromUser();
+            }
+            displayVehicleStatusOptions();
+            string userInput = Console.ReadLine();
+
+            Enum.TryParse(userInput, true, out eVehicleStatus vehicleStatus);
+
+            r_GarageManagerService.SetVehicleStatus(licensePlate, vehicleStatus.ToString());
+        }
+
+        private void handleNumericInput(string i_UserInputToValidate, out int o_UserInputAsInt)
+        {
+
+            bool isUserInputNumeric = Int32.TryParse(i_UserInputToValidate, out int userInputAsInt);
+
+            while(!isUserInputNumeric)
+            {
+                displayMessage(eUserMessages.InvalidInputMessage);
+            }
+            o_UserInputAsInt = userInputAsInt;
+
+        }
+
         private eMenuOptions getMenuOptionFromUser()
         {
             eMenuOptions serviceOptionToInvoke;
@@ -56,7 +96,7 @@ namespace Ex03.ConsoleUI.Controller
             do
             {
 
-                getUserOptionsInput(out string userInput);
+                getUserInput(out string userInput);
                 isUserInputValid(userInput, out serviceOptionToInvoke);
             }
             while (serviceOptionToInvoke.Equals(eMenuOptions.None));
@@ -89,7 +129,20 @@ namespace Ex03.ConsoleUI.Controller
             }
         }
 
-        private void getUserOptionsInput(out string o_UserInput)
+        private void displayVehicleStatusOptions()
+        {
+            StringBuilder message = new StringBuilder("Please enter the vehicle status: \n");
+            foreach (eVehicleStatus vehicleStatus in Enum.GetValues(typeof(eVehicleStatus)))
+            {
+                message.Append(vehicleStatus + ", ");
+            }
+            message.Remove(message.Length - 2, 2);
+            Console.WriteLine(message);
+
+        }
+
+
+        private void getUserInput(out string o_UserInput)
         {
             o_UserInput = Console.ReadLine();
         }
@@ -114,8 +167,8 @@ namespace Ex03.ConsoleUI.Controller
         {
             bool propertySuccess = false, ticketSuccess = false;
             IEnumerable<string> propertiesNames = null;
-            displayMessage(eUserMessages.EnterLicensePlateNumberMessage);
-            getUserOptionsInput(out string licensePlateNumber);
+            string licensePlateNumber = getLicensePlateFromUser();
+
             if (r_GarageManagerService.IsVehicleInGarage(licensePlateNumber))
             {
                 displayMessage(eUserMessages.VehicleIsAlreadyInGarageMessage);
@@ -133,12 +186,13 @@ namespace Ex03.ConsoleUI.Controller
             {
                 while (!ticketSuccess)
                 {
+                    Console.WriteLine("\n");
                     displayMessage(eUserMessages.EnterVehicleTypeMessage);
-                    getUserOptionsInput(out string vehicleType);
+                    string vehicleType = Console.ReadLine();
                     displayMessage(eUserMessages.EnterCustomerNameMessage);
-                    getUserOptionsInput(out string customerName);
+                    string customerName = Console.ReadLine();
                     displayMessage(eUserMessages.EnterCustomerPhoneNumberMessage);
-                    getUserOptionsInput(out string customerPhoneNumber);
+                    string customerPhoneNumber = Console.ReadLine();
                     try
                     {
                         propertiesNames =
@@ -177,6 +231,13 @@ namespace Ex03.ConsoleUI.Controller
                     }
                 }
             }
+        }
+
+        private string getLicensePlateFromUser()
+        {
+            displayMessage(eUserMessages.EnterLicensePlateNumberMessage);
+            getUserInput(out string licensePlateNumber);
+            return licensePlateNumber;
         }
     }
 }

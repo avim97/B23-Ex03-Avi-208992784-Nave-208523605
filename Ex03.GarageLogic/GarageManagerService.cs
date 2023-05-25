@@ -81,13 +81,13 @@ namespace Ex03.GarageLogic
             return allVehicles.ToString();
         }
 
-        public string GetAllLicensePlatesByStatus(eVehicleStatus i_VehicleStatusToFilter)
+        public string GetAllLicensePlatesByStatus(string i_VehicleStatusToFilter)
         {
             StringBuilder allLicensePlates = new StringBuilder();
 
             foreach (KeyValuePair<int, CustomerTicket> customerTicket in m_CustomersTickets)
             {
-                if (customerTicket.Value.VehicleStatus == i_VehicleStatusToFilter)
+                if (customerTicket.Value.VehicleStatus.ToString() == i_VehicleStatusToFilter)
                 {
                     allLicensePlates.AppendLine(customerTicket.Key.ToString());
                 }

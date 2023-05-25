@@ -13,17 +13,21 @@ namespace Ex03.GarageLogic.Models
     {
         internal string LicensePlate { get; set; }
         public string ModelName { get; set; }
-        public IList<Wheel> Wheels { get; set; }
-        public EnergySource EnergySource { get; set; }
+        internal IEnumerable<Wheel> Wheels { get; set; }
+        internal EnergySource EnergySource { get; set; }
         public float EnergyPercentage => this.EnergySource.EnergyPercentage;
-
         protected Vehicle(int i_NumWheels, float i_WheelMaxPressure)
         {
-            Wheels = new List<Wheel>(i_NumWheels);
+            Wheels = new LinkedList<Wheel>();
 
-            foreach(Wheel wheel in Wheels)
+            for (int i = 0; i < i_NumWheels; i++)
             {
-                wheel.MaxPressure = i_WheelMaxPressure;
+                Wheel wheel = new Wheel
+                {
+                    MaxPressure = i_WheelMaxPressure
+                };
+
+                Wheels.Append(wheel);
             }
         }
         public virtual void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary)
@@ -32,15 +36,16 @@ namespace Ex03.GarageLogic.Models
             {
                 ModelName = i_PropertiesToUpdateDictionary[nameof(ModelName)];
             }
-            else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(EnergySource)))
+
+            foreach(Wheel wheel in Wheels)
             {
-                //update energy source accordingly 
+                wheel.UpdateProperties(i_PropertiesToUpdateDictionary);
             }
         }
 
         public virtual void InflateWheelsToMax()
         {
-            foreach(Wheel wheel in Wheels)
+            foreach (Wheel wheel in Wheels)
             {
                 wheel.CurrentPressure = wheel.MaxPressure;
             }
@@ -57,6 +62,8 @@ namespace Ex03.GarageLogic.Models
             {
                 propertiesNames.Add(property.Name);
             }
+
+            propertiesNames.Concat(Wheels.First().GetPropertiesNames());
 
             return propertiesNames;
         }

@@ -3,8 +3,10 @@
     internal enum eVehicleType
     {
         None,
-        Car,
-        Truck,
-        Motorcycle
+        ElectricCar,
+        FuelCar,
+        ElectricMotorcycle,
+        FuelMotorcycle,
+        Truck
     }
 }

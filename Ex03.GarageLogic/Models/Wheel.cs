@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.GarageLogic.Models
@@ -35,6 +37,21 @@ namespace Ex03.GarageLogic.Models
                 const float k_MinPressure = 0;
                 throw new ValueOutOfRangeException(k_MinPressure, MaxPressure);
             }
+        }
+
+        internal IEnumerable<string> GetPropertiesNames()
+        {
+            Type type = GetType();
+            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+            List<string> propertiesNames = new List<string>();
+
+            foreach (PropertyInfo property in properties)
+            {
+                propertiesNames.Add(property.Name);
+            }
+
+            return propertiesNames;
         }
     }
 }

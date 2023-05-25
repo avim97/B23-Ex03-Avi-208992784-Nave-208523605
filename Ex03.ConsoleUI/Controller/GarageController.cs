@@ -146,6 +146,12 @@ namespace Ex03.ConsoleUI.Controller
             StringBuilder message = new StringBuilder("Please enter the vehicle status: \n");
             foreach (eVehicleStatus vehicleStatus in Enum.GetValues(typeof(eVehicleStatus)))
             {
+
+                if(vehicleStatus == eVehicleStatus.None)
+                {
+                    continue;
+                }
+
                 message.Append(vehicleStatus + ", ");
             }
             message.Remove(message.Length - 2, 2);

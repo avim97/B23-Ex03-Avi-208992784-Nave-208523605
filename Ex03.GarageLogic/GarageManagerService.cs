@@ -83,11 +83,12 @@ namespace Ex03.GarageLogic
 
         public string GetAllLicensePlatesByStatus(string i_VehicleStatusToFilter)
         {
+            eVehicleStatus vehicleStatusToFilter = parseVehicleStatus(i_VehicleStatusToFilter);
             StringBuilder allLicensePlates = new StringBuilder();
 
             foreach (KeyValuePair<int, CustomerTicket> customerTicket in m_CustomersTickets)
             {
-                if (customerTicket.Value.VehicleStatus.ToString() == i_VehicleStatusToFilter)
+                if (customerTicket.Value.VehicleStatus == vehicleStatusToFilter)
                 {
                     allLicensePlates.AppendLine(customerTicket.Key.ToString());
                 }
@@ -167,8 +168,11 @@ namespace Ex03.GarageLogic
 
         public void SetVehicleStatus(string i_LicensePlate, string i_VehicleStatus)
         {
+
+            eVehicleStatus vehicleStatus = parseVehicleStatus(i_VehicleStatus);
+
             CustomerTicket customersTicket = m_CustomersTickets[i_LicensePlate.GetHashCode()];
-            Enum.TryParse(i_VehicleStatus, out eVehicleStatus vehicleStatus);
+
             if (IsVehicleInGarage(i_LicensePlate))
             {
                 customersTicket.VehicleStatus = vehicleStatus;
@@ -176,6 +180,19 @@ namespace Ex03.GarageLogic
             else
             {
                 throw new ArgumentException("A Vehicle with the entered license plate is not found");
+            }
+        }
+
+        private eVehicleStatus parseVehicleStatus(string i_VehicleStatus)
+        {
+            Enum.TryParse(i_VehicleStatus, out eVehicleStatus vehicleStatus);
+            if(vehicleStatus.Equals(eVehicleStatus.None))
+            {
+                throw new FormatException("invalid status");
+            }
+            else
+            {
+                return vehicleStatus;
             }
         }
 

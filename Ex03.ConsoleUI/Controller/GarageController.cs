@@ -62,18 +62,30 @@ namespace Ex03.ConsoleUI.Controller
         private void handleChangeVehicleStatus()
         {
             string licensePlate = getLicensePlateFromUser();
+            bool changedVehicleStatus = false;
             string invalidInputMessage = "Invalid input, vehicle not exist, please try again";
             while(!r_GarageManagerService.IsVehicleInGarage(licensePlate))
             {
                 displayMessage(invalidInputMessage);
                 licensePlate = getLicensePlateFromUser();
             }
-            displayVehicleStatusOptions();
-            string userInput = Console.ReadLine();
 
-            Enum.TryParse(userInput, true, out eVehicleStatus vehicleStatus);
+            do
+            {
+                displayVehicleStatusOptions();
+                string userInput = Console.ReadLine();
+                try
+                {
+                    r_GarageManagerService.SetVehicleStatus(licensePlate, userInput);
+                    changedVehicleStatus = true;
+                }
+                catch(Exception e)
+                {
+                    displayMessage(e.Message);
+                }
+            }
+            while(!changedVehicleStatus);
 
-            r_GarageManagerService.SetVehicleStatus(licensePlate, vehicleStatus.ToString());
         }
 
         private void handleNumericInput(string i_UserInputToValidate, out int o_UserInputAsInt)

@@ -5,16 +5,19 @@ namespace Ex03.ConsoleUI.Resources
 {
     public enum eMenuOptions
     {
-        [Description("\n")]
+        [Description("")]
         None = 0,
         [Description("1. Insert a new vehicle to the garage")]
-        ChooseToInsertNewVehicle,
+        InsertNewVehicle,
         [Description("2. Show all license plates in the garage")]
-        ChooseToShowAllLicensePlates,
-        [Description("3. Change vehicle status")]
-        ChooseToChangeVehicleStatus,
-        [Description("4. Inflate wheels to maximum")]
-        ChooseToInflateWheelsToMax,
-
+        ShowAllLicensePlates,
+        [Description("3. Filter and show all license plates in the garage")]
+        FilterAndShowLicensePlates,
+        [Description("4. Change vehicle status")]
+        ChangeVehicleStatus,
+        [Description("5. Inflate wheels to maximum")]
+        InflateWheelsToMax,
+        [Description("6. Exit")]
+        Exit
     }
 }

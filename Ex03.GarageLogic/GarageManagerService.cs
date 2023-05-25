@@ -87,13 +87,26 @@ namespace Ex03.GarageLogic
             return allLicensePlates.ToString();
         }
 
-        public void ChangeVehicleStatus(string i_LicensePlate, eVehicleStatus i_VehicleStatus) 
+        public string GetAllLicensePlates()
+        {
+            StringBuilder allLicensePlates = new StringBuilder();
+
+            foreach (KeyValuePair<int, CustomerTicket> customerTicket in m_CustomersTickets)
+            {
+                allLicensePlates.AppendLine(customerTicket.Key.ToString());
+            }
+
+            return allLicensePlates.ToString();
+        }
+
+
+        public void ChangeVehicleStatus(string i_LicensePlate, eVehicleStatus i_VehicleStatus)
         {
             CustomerTicket ticketToChangeStatus = m_CustomersTickets[Convert.ToInt32(i_LicensePlate)];
             ticketToChangeStatus.VehicleStatus = i_VehicleStatus;
         }
 
-        public void InflateVehicleWheelsToMax(string i_LicensePlate) 
+        public void InflateVehicleWheelsToMax(string i_LicensePlate)
         {
             Vehicle vehicleToInflate = m_Vehicles[i_LicensePlate.GetHashCode()];
 
@@ -148,7 +161,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public StringBuilder GetVehicleDetails(string i_licensePlate) 
+        public StringBuilder GetVehicleDetails(string i_licensePlate)
         {
             StringBuilder vehicleDetails = new StringBuilder();
             vehicleDetails.AppendLine(m_Vehicles[Convert.ToInt32(i_licensePlate)].ToString());
@@ -175,8 +188,9 @@ namespace Ex03.GarageLogic
 
         private eVehicleStatus parseVehicleStatus(string i_VehicleStatus)
         {
-            Enum.TryParse(i_VehicleStatus,ignoreCase:true, out eVehicleStatus vehicleStatus);
-            if(vehicleStatus.Equals(eVehicleStatus.None))
+            Enum.TryParse(i_VehicleStatus, ignoreCase: true, out eVehicleStatus vehicleStatus);
+
+            if (vehicleStatus.Equals(eVehicleStatus.None))
             {
                 throw new FormatException("invalid status");
             }
@@ -192,7 +206,7 @@ namespace Ex03.GarageLogic
             foreach (Enum vehicleType in Enum.GetValues(typeof(eVehicleType)))
             {
 
-                if(vehicleType.ToString() == "None")
+                if (vehicleType.ToString() == "None")
                 {
                     continue;
                 }

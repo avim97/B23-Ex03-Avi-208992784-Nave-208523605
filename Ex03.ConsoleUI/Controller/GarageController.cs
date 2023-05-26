@@ -28,7 +28,7 @@ namespace Ex03.ConsoleUI.Controller
             {
                 eMenuOptions serviceOptionToInvoke;
 
-                printEnumMessage(eUserMessages.HelloMessage);
+                printEnumMessage(eUserMessage.HelloMessage);
                 displayMenuOptions();
                 serviceOptionToInvoke = getMenuOptionFromUser();
 
@@ -67,12 +67,13 @@ namespace Ex03.ConsoleUI.Controller
                 }
                 else if (serviceOptionToInvoke == eMenuOptions.Exit)
                 {
+                    printEnumMessage(eUserMessage.GoodbyeMessage);
                     isRunning = false;
                 }
 
                 if (isRunning)
                 {
-                    printEnumMessage(eUserMessages.PressAnyKeyToReturnToMainMenuMessage);
+                    printEnumMessage(eUserMessage.PressAnyKeyToReturnToMainMenuMessage);
                     Console.ReadKey();
                     clearConsole();
                 }
@@ -194,26 +195,26 @@ namespace Ex03.ConsoleUI.Controller
             }
             else
             {
-                printEnumMessage(eUserMessages.InvalidUserChoiceMessage);
+                printEnumMessage(eUserMessage.InvalidUserChoiceMessage);
             }
         }
 
         private void addNewVehicleToGarage()
         {
-            bool areVehiclePropertiesParamsValid = false, isVehicleInGarage = false;
+            bool isVehicleInGarage = false;
             IEnumerable<string> propertiesNames = null;
 
-            string licensePlateNumber = getInputFromUser(eUserMessages.EnterLicensePlateNumberMessage);
+            string licensePlateNumber = getInputFromUser(eUserMessage.EnterLicensePlateNumberMessage);
 
             if (r_GarageManagerService.IsVehicleInGarage(licensePlateNumber))
             {
-                printEnumMessage(eUserMessages.VehicleIsAlreadyInGarageMessage);
+                printEnumMessage(eUserMessage.VehicleIsAlreadyInGarageMessage);
 
                 try
                 {
-                    string k_InWork = eVehicleStatus.InWork.ToString();
+                    string inWork = eVehicleStatus.InWork.ToString();
 
-                    r_GarageManagerService.SetVehicleStatus(licensePlateNumber, k_InWork);
+                    r_GarageManagerService.SetVehicleStatus(licensePlateNumber, inWork);
                 }
                 catch (Exception ex)
                 {
@@ -226,13 +227,13 @@ namespace Ex03.ConsoleUI.Controller
                 {
                     Console.WriteLine();
 
-                    printEnumMessage(eUserMessages.EnterCustomerNameMessage);
+                    printEnumMessage(eUserMessage.EnterCustomerNameMessage);
                     string customerName = Console.ReadLine();
 
-                    printEnumMessage(eUserMessages.EnterCustomerPhoneNumberMessage);
+                    printEnumMessage(eUserMessage.EnterCustomerPhoneNumberMessage);
                     string customerPhoneNumber = Console.ReadLine();
 
-                    printEnumMessage(eUserMessages.EnterVehicleTypeMessage);
+                    printEnumMessage(eUserMessage.EnterVehicleTypeMessage);
                     printMessage(r_GarageManagerService.GetSupportedVehiclesNames());
                     string vehicleType = Console.ReadLine();
 
@@ -253,46 +254,48 @@ namespace Ex03.ConsoleUI.Controller
                     }
                 }
 
-                while (!areVehiclePropertiesParamsValid)
+                foreach (string propertyName in propertiesNames)
                 {
-                    foreach (string propertyName in propertiesNames)
+                    string message = string.Format(getDescriptionFromEnum(eUserMessage.EnterPropertyMessage), propertyName);
+                    bool isPropertyInputValid;
+
+                    do
                     {
                         Dictionary<string, string> userInputProperties = new Dictionary<string, string>();
-                        string message = string.Format(getDescriptionFromEnum(eUserMessages.EnterPropertyMessage), propertyName);
-
-                        printMessage(message);
-                        userInputProperties.Add(propertyName, Console.ReadLine());
+                        isPropertyInputValid = true;
+                        string userInput = getInputFromUser(message);
+                        userInputProperties.Add(propertyName, userInput); 
 
                         try
                         {
                             r_GarageManagerService.UpdateProperties(licensePlateNumber, userInputProperties);
-                            areVehiclePropertiesParamsValid = true;
                         }
                         catch (Exception ex)
                         {
                             printMessage(ex.Message);
-                            areVehiclePropertiesParamsValid = false;
-                            break;
+                            isPropertyInputValid = false;
                         }
                     }
+                    while(!isPropertyInputValid);
                 }
+
             }
         }
 
         private string getValidLicensePlate()
         {
-            string licensePlate = getInputFromUser(eUserMessages.EnterLicensePlateNumberMessage);
+            string licensePlate = getInputFromUser(eUserMessage.EnterLicensePlateNumberMessage);
 
             while (!r_GarageManagerService.IsVehicleInGarage(licensePlate))
             {
-                printEnumMessage(eUserMessages.InvalidInputMessage);
-                licensePlate = getInputFromUser(eUserMessages.EnterLicensePlateNumberMessage);
+                printEnumMessage(eUserMessage.InvalidInputMessage);
+                licensePlate = getInputFromUser(eUserMessage.EnterLicensePlateNumberMessage);
             }
 
             return licensePlate;
         }
 
-        private string getInputFromUser(eUserMessages i_InputMessage)
+        private string getInputFromUser(eUserMessage i_InputMessage)
         {
             printEnumMessage(i_InputMessage);
             readUserInput(out string licensePlateNumber);
@@ -303,33 +306,31 @@ namespace Ex03.ConsoleUI.Controller
         private string getInputFromUser(string i_InputMessage)
         {
             printMessage(i_InputMessage);
-            readUserInput(out string licensePlateNumber);
+            readUserInput(out string userInput);
 
-            return licensePlateNumber;
+            return userInput;
         }
 
         private void fuelVehicle()
         {
             string licensePlate = getValidLicensePlate();
-            string fuelType = getInputFromUser(eUserMessages.EnterFuelTypeMessage);
-            string fuelAmountToAdd = getInputFromUser(eUserMessages.EnterFuelAmount);
+            string fuelType = getInputFromUser(eUserMessage.EnterFuelTypeMessage);
+            string fuelAmountToAdd = getInputFromUser(eUserMessage.EnterFuelAmount);
 
             try
             {
                 r_GarageManagerService.FuelVehicle(licensePlate, fuelType, fuelAmountToAdd);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
         }
 
         private void chargeVehicle()
         {
-            string licensePlate, chargineTime;
-
-            licensePlate = getValidLicensePlate();
-            chargineTime = getInputFromUser(eUserMessages.EnterChargingAmountTime);
+            string licensePlate = getValidLicensePlate();
+            string chargineTime = getInputFromUser(eUserMessage.EnterChargingAmountTime);
 
             float.TryParse(chargineTime, out float chargingTimeInMinutesValue);
             float chargingTimeInHoursValue = chargingTimeInMinutesValue / 60;
@@ -340,9 +341,9 @@ namespace Ex03.ConsoleUI.Controller
             {
                 r_GarageManagerService.ChargeVehicle(licensePlate, chargineTime);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -352,6 +353,7 @@ namespace Ex03.ConsoleUI.Controller
 
             printMessage(r_GarageManagerService.GetVehicleDetails(licensePlate));
         }
+
         private void inflateAllWheelsToMax()
         {
             string licensePlateNumber = getValidLicensePlate();

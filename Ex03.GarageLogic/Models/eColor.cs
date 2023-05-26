@@ -2,6 +2,7 @@
 {
     internal enum eColor
     {
+        None = 0,
         White,
         Black,
         Yellow,

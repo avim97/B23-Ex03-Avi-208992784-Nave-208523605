@@ -9,21 +9,21 @@ namespace Ex03.GarageLogic.Models
 {
     internal class Motorcycle : Vehicle
     {
-        private eLicenseType m_LicenseType;
+        private string m_LicenseType;
 
         public int EngineVolume { get; set; }
 
         public Motorcycle(int i_NumWheels, float i_WheelMaxPressure)
             : base(i_NumWheels, i_WheelMaxPressure) { }
 
-        public eLicenseType LicenseType
+        public string LicenseType
         {
             get => m_LicenseType;
             set
             {
-                if (Enum.IsDefined(typeof(eLicenseType), value))
+                if (Enum.TryParse(value, ignoreCase:true, out eLicenseType licenseType))
                 {
-                    m_LicenseType = value;
+                    m_LicenseType = licenseType.ToString();
                 }
                 else
                 {
@@ -38,8 +38,7 @@ namespace Ex03.GarageLogic.Models
 
             if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(LicenseType)))
             {
-                Enum.TryParse(i_PropertiesToUpdateDictionary[nameof(LicenseType)], out eLicenseType licenseType);
-                LicenseType = licenseType;
+                LicenseType = i_PropertiesToUpdateDictionary[nameof(LicenseType)];
             }
             else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(EngineVolume)))
             {

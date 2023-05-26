@@ -8,20 +8,22 @@ namespace Ex03.GarageLogic.Models
 {
     internal class Car : Vehicle
     {
-        private eColor m_Color;
-        private eTotalVehicleDoors m_NumDoors;
+        private string m_Color;
+        private int m_NumDoors;
 
         public Car(int i_NumWheels, float i_WheelMaxPressure)
             : base(i_NumWheels, i_WheelMaxPressure) { }
 
-        public eColor Color
+        public string Color
         {
             get => m_Color;
             set
             {
-                if (Enum.IsDefined(typeof(eColor), value))
+                Enum.TryParse(value, ignoreCase: true, out eColor color);
+
+                if (color != eColor.None)
                 {
-                    m_Color = value;
+                    m_Color = color.ToString();
                 }
                 else
                 {
@@ -30,7 +32,7 @@ namespace Ex03.GarageLogic.Models
             }
 
         }
-        public eTotalVehicleDoors NumberOfDoors
+        public int NumberOfDoors
         {
             get => m_NumDoors;
             set
@@ -52,17 +54,13 @@ namespace Ex03.GarageLogic.Models
 
             if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(Color)))
             {
-                Enum.TryParse(i_PropertiesToUpdateDictionary[nameof(Color)], out eColor colorToSet);
-
-                this.Color = colorToSet;
+                this.Color = i_PropertiesToUpdateDictionary[nameof(Color)];
             }
             else if (i_PropertiesToUpdateDictionary.ContainsKey(nameof(NumberOfDoors)))
             {
-                Enum.TryParse(
-                    i_PropertiesToUpdateDictionary[nameof(NumberOfDoors)], 
-                    out eTotalVehicleDoors totalVehicleDoors);
+                int.TryParse(i_PropertiesToUpdateDictionary[nameof(NumberOfDoors)], out int numDoors);
 
-                this.NumberOfDoors = totalVehicleDoors;
+                this.NumberOfDoors = numDoors;
             }
         }
 

@@ -1,5 +1,8 @@
 ﻿
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.GarageLogic.Models
@@ -7,16 +10,18 @@ namespace Ex03.GarageLogic.Models
     internal abstract class EnergySource
     {
         protected float m_EnergyAmountLeft;
+        protected float m_EnergyPercentage;
         protected readonly float r_Capacity;
 
         protected EnergySource() { }
         protected EnergySource(float i_Capacity)
         {
             m_EnergyAmountLeft = 0;
+            m_EnergyPercentage = 0;
             r_Capacity = i_Capacity;
         }
 
-        public float EnergyPercentage
+        internal float EnergyPercentage
         {
             get
             {
@@ -32,6 +37,21 @@ namespace Ex03.GarageLogic.Models
                 }
 
                 return energyPercentageLeft;
+            }
+            set
+            {
+                const float k_MaxAmount = 100f;
+
+                if(m_EnergyPercentage + value <= k_MaxAmount)
+                {
+                    m_EnergyAmountLeft += value;
+                }
+                else
+                {
+                    const float k_MinEnergyAmount = 0;
+
+                    throw new ValueOutOfRangeException(k_MinEnergyAmount, k_MaxAmount);
+                }
             }
         }
 
@@ -57,6 +77,29 @@ namespace Ex03.GarageLogic.Models
         public override string ToString()
         {
             return this.EnergyPercentage.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public abstract void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary);
+
+        internal IEnumerable<string> GetPropertiesNames()
+        {
+            Type type = GetType();
+            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+            List<string> propertiesNames = new List<string>();
+
+            foreach (PropertyInfo property in properties)
+            {
+                propertiesNames.Add(property.Name);
+            }
+
+            IEnumerable<string> wheelPropertiesNames = Wheel.GetPropertiesNames();
+
+            foreach (string property in wheelPropertiesNames)
+            {
+                propertiesNames.Add(property);
+            }
+            return propertiesNames;
         }
     }
 }

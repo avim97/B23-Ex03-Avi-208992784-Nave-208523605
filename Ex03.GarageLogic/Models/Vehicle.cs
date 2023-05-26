@@ -13,9 +13,14 @@ namespace Ex03.GarageLogic.Models
     {
         internal string LicensePlate { get; set; }
         public string ModelName { get; set; }
-        internal IEnumerable<Wheel> Wheels { get; set; }
+        internal LinkedList<Wheel> Wheels { get; set; }
         internal EnergySource EnergySource { get; set; }
-        public float EnergyPercentage => this.EnergySource.EnergyPercentage;
+
+        internal float EnergyPercentage
+        {
+            get => this.EnergySource.EnergyPercentage;
+            set => this.EnergySource.EnergyPercentage = value;
+        }
 
         protected Vehicle(int i_NumWheels, float i_WheelMaxPressure)
         {
@@ -25,10 +30,10 @@ namespace Ex03.GarageLogic.Models
             {
                 Wheel wheel = new Wheel
                 {
-                    MaxPressure = i_WheelMaxPressure
+                    WheelMaxPressure = i_WheelMaxPressure
                 };
 
-                Wheels.Append(wheel);
+                Wheels.AddLast(wheel);
             }
         }
         public virtual void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary)
@@ -38,7 +43,9 @@ namespace Ex03.GarageLogic.Models
                 ModelName = i_PropertiesToUpdateDictionary[nameof(ModelName)];
             }
 
-            foreach(Wheel wheel in Wheels)
+            EnergySource.UpdateProperties(i_PropertiesToUpdateDictionary);
+
+            foreach (Wheel wheel in Wheels)
             {
                 wheel.UpdateProperties(i_PropertiesToUpdateDictionary);
             }
@@ -48,30 +55,36 @@ namespace Ex03.GarageLogic.Models
         {
             foreach (Wheel wheel in Wheels)
             {
-                wheel.CurrentPressure = wheel.MaxPressure;
+                wheel.WheelCurrentPressure = wheel.WheelMaxPressure;
             }
         }
 
-        public IEnumerable<string> GetPropertiesNames()
+        internal IEnumerable<string> GetPropertiesNames()
         {
             Type type = GetType();
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
             List<string> propertiesNames = new List<string>();
 
-            string vehiclePropertyMessage = "vehicle {0}";
             foreach (PropertyInfo property in properties)
             {
-                propertiesNames.Add(string.Format(vehiclePropertyMessage,property.Name));
+                propertiesNames.Add(property.Name);
             }
 
-            Wheel wheel = new Wheel();
-            // propertiesNames.Concat(wheel.GetPropertiesNames());
-            string wheelPropertyMessage = "wheels {0}";
-            foreach(string property in wheel.GetPropertiesNames())
+            IEnumerable<string> wheelPropertiesNames = Wheel.GetPropertiesNames();
+
+            foreach (string property in wheelPropertiesNames)
             {
-                propertiesNames.Add(String.Format(wheelPropertyMessage,property));
+                propertiesNames.Add(property);
             }
+
+            IEnumerable<string> energySourcePropertiesNames = this.EnergySource.GetPropertiesNames();
+
+            foreach (string property in energySourcePropertiesNames)
+            {
+                propertiesNames.Add(property);
+            }
+
             return propertiesNames;
         }
 

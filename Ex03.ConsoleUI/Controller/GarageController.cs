@@ -211,9 +211,9 @@ namespace Ex03.ConsoleUI.Controller
 
                 try
                 {
-                    string k_InWork = eVehicleStatus.InWork.ToString();
+                    string inWork = eVehicleStatus.InWork.ToString();
 
-                    r_GarageManagerService.SetVehicleStatus(licensePlateNumber, k_InWork);
+                    r_GarageManagerService.SetVehicleStatus(licensePlateNumber, inWork);
                 }
                 catch (Exception ex)
                 {
@@ -318,18 +318,16 @@ namespace Ex03.ConsoleUI.Controller
             {
                 r_GarageManagerService.FuelVehicle(licensePlate, fuelType, fuelAmountToAdd);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
         }
 
         private void chargeVehicle()
         {
-            string licensePlate, chargineTime;
-
-            licensePlate = getValidLicensePlate();
-            chargineTime = getInputFromUser(eUserMessages.EnterChargingAmountTime);
+            string licensePlate = getValidLicensePlate();
+            string chargineTime = getInputFromUser(eUserMessages.EnterChargingAmountTime);
 
             float.TryParse(chargineTime, out float chargingTimeInMinutesValue);
             float chargingTimeInHoursValue = chargingTimeInMinutesValue / 60;
@@ -340,9 +338,9 @@ namespace Ex03.ConsoleUI.Controller
             {
                 r_GarageManagerService.ChargeVehicle(licensePlate, chargineTime);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
         }
 

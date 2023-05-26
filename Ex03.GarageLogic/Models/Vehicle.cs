@@ -59,14 +59,19 @@ namespace Ex03.GarageLogic.Models
 
             List<string> propertiesNames = new List<string>();
 
+            string vehiclePropertyMessage = "vehicle {0}";
             foreach (PropertyInfo property in properties)
             {
-                propertiesNames.Add(property.Name);
+                propertiesNames.Add(string.Format(vehiclePropertyMessage,property.Name));
             }
 
             Wheel wheel = new Wheel();
-            propertiesNames.Concat(wheel.GetPropertiesNames());
-
+            // propertiesNames.Concat(wheel.GetPropertiesNames());
+            string wheelPropertyMessage = "wheels {0}";
+            foreach(string property in wheel.GetPropertiesNames())
+            {
+                propertiesNames.Add(String.Format(wheelPropertyMessage,property));
+            }
             return propertiesNames;
         }
 

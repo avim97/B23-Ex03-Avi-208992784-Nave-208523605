@@ -194,6 +194,7 @@ namespace Ex03.GarageLogic
         public string GetSupportedVehiclesNames()
         {
             StringBuilder supportedVehicles = new StringBuilder();
+            short index = 1;
             foreach (Enum vehicleType in Enum.GetValues(typeof(eVehicleType)))
             {
 
@@ -202,7 +203,8 @@ namespace Ex03.GarageLogic
                     continue;
                 }
 
-                supportedVehicles.Append(string.Format(@" {0} ", vehicleType.ToString()));
+                supportedVehicles.Append($"{index}. {vehicleType.ToString()} \n");
+                ++index;
             }
 
 

@@ -17,7 +17,7 @@ namespace Ex03.ConsoleUI.Resources
         ChangeVehicleStatus,
         [Description("5. Inflate wheels to maximum")]
         InflateWheelsToMax,
-        [Description("7. Fuel vehicle")]
+        [Description("6. Fuel vehicle")]
         FuelVehicle,
         [Description("7. Charge vehicle")]
         ChargeVehicle,

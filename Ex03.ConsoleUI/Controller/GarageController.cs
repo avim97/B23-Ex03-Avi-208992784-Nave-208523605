@@ -200,7 +200,7 @@ namespace Ex03.ConsoleUI.Controller
 
         private void addNewVehicleToGarage()
         {
-            bool areVehiclePropertiesParamsValid = false, isVehicleInGarage = false;
+            bool isVehicleInGarage = false;
             IEnumerable<string> propertiesNames = null;
 
             string licensePlateNumber = getInputFromUser(eUserMessages.EnterLicensePlateNumberMessage);
@@ -253,29 +253,31 @@ namespace Ex03.ConsoleUI.Controller
                     }
                 }
 
-                while (!areVehiclePropertiesParamsValid)
+                foreach (string propertyName in propertiesNames)
                 {
-                    foreach (string propertyName in propertiesNames)
+                    string message = string.Format(getDescriptionFromEnum(eUserMessages.EnterPropertyMessage), propertyName);
+                    bool isPropertyInputValid;
+
+                    do
                     {
                         Dictionary<string, string> userInputProperties = new Dictionary<string, string>();
-                        string message = string.Format(getDescriptionFromEnum(eUserMessages.EnterPropertyMessage), propertyName);
-
-                        printMessage(message);
-                        userInputProperties.Add(propertyName, Console.ReadLine());
+                        isPropertyInputValid = true;
+                        string userInput = getInputFromUser(message);
+                        userInputProperties.Add(propertyName, userInput); 
 
                         try
                         {
                             r_GarageManagerService.UpdateProperties(licensePlateNumber, userInputProperties);
-                            areVehiclePropertiesParamsValid = true;
                         }
                         catch (Exception ex)
                         {
                             printMessage(ex.Message);
-                            areVehiclePropertiesParamsValid = false;
-                            break;
+                            isPropertyInputValid = false;
                         }
                     }
+                    while(!isPropertyInputValid);
                 }
+
             }
         }
 
@@ -303,9 +305,9 @@ namespace Ex03.ConsoleUI.Controller
         private string getInputFromUser(string i_InputMessage)
         {
             printMessage(i_InputMessage);
-            readUserInput(out string licensePlateNumber);
+            readUserInput(out string userInput);
 
-            return licensePlateNumber;
+            return userInput;
         }
 
         private void fuelVehicle()

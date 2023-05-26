@@ -2,7 +2,7 @@
 
 namespace Ex03.ConsoleUI.Resources
 {
-    public enum eUserMessages
+    public enum eUserMessage
     {
         [Description("Hello, welcome to the garage!")]
         HelloMessage,
@@ -30,5 +30,7 @@ namespace Ex03.ConsoleUI.Resources
         PressAnyKeyToReturnToMainMenuMessage,
         [Description("Please enter {0}:")]
         EnterPropertyMessage,
+        [Description("Goodbye.")]
+        GoodbyeMessage
     }
 }

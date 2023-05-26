@@ -53,5 +53,14 @@ namespace Ex03.GarageLogic.Models
 
             return propertiesNames;
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+                @"Manufacturer: {0}
+Current pressure {1}",
+                Manufacturer,
+                CurrentPressure);
+        }
     }
 }

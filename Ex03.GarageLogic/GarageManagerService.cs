@@ -10,7 +10,6 @@ namespace Ex03.GarageLogic
     public class GarageManagerService
     {
         private readonly Dictionary<int, CustomerTicket> m_CustomersTickets;
-
         private readonly Dictionary<int, Vehicle> m_Vehicles;
 
         public GarageManagerService()
@@ -47,6 +46,7 @@ namespace Ex03.GarageLogic
 
             CustomerTicket customerTicket = new CustomerTicket
             {
+                LicensePlate = i_LicensePlate,
                 CustomerName = i_CustomerName,
                 CustomerPhone = i_CustomerPhoneNumber,
                 VehicleStatus = eVehicleStatus.InWork
@@ -59,18 +59,6 @@ namespace Ex03.GarageLogic
             return vehicle.GetPropertiesNames();
         }
 
-        public string GetAllVehicles()
-        {
-            StringBuilder allVehicles = new StringBuilder();
-
-            foreach (KeyValuePair<int, Vehicle> vehicle in m_Vehicles)
-            {
-                allVehicles.AppendLine(vehicle.Value.ToString());
-            }
-
-            return allVehicles.ToString();
-        }
-
         public string GetAllLicensePlatesByStatus(string i_VehicleStatusToFilter)
         {
             eVehicleStatus vehicleStatusToFilter = parseVehicleStatus(i_VehicleStatusToFilter);
@@ -80,7 +68,7 @@ namespace Ex03.GarageLogic
             {
                 if (customerTicket.Value.VehicleStatus == vehicleStatusToFilter)
                 {
-                    allLicensePlates.AppendLine(customerTicket.Key.ToString());
+                    allLicensePlates.AppendLine(customerTicket.Value.LicensePlate);
                 }
             }
 
@@ -93,24 +81,22 @@ namespace Ex03.GarageLogic
 
             foreach (KeyValuePair<int, CustomerTicket> customerTicket in m_CustomersTickets)
             {
-                allLicensePlates.AppendLine(customerTicket.Key.ToString());
+                allLicensePlates.AppendLine(customerTicket.Value.LicensePlate);
             }
 
             return allLicensePlates.ToString();
         }
 
-
-        public void ChangeVehicleStatus(string i_LicensePlate, eVehicleStatus i_VehicleStatus)
-        {
-            CustomerTicket ticketToChangeStatus = m_CustomersTickets[Convert.ToInt32(i_LicensePlate)];
-            ticketToChangeStatus.VehicleStatus = i_VehicleStatus;
-        }
-
         public void InflateVehicleWheelsToMax(string i_LicensePlate)
         {
-            Vehicle vehicleToInflate = m_Vehicles[i_LicensePlate.GetHashCode()];
-
-            vehicleToInflate.InflateWheelsToMax();
+            if (IsVehicleInGarage(i_LicensePlate))
+            {
+                this.m_Vehicles[i_LicensePlate.GetHashCode()].InflateWheelsToMax();
+            }
+            else
+            {
+                throw new ArgumentException("A Vehicle with the entered license plate is not found");
+            }
         }
 
         public void FuelVehicle(string i_LicensePlate, string i_FuelType, string i_FuelAmountToAdd)
@@ -161,12 +147,17 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public StringBuilder GetVehicleDetails(string i_licensePlate)
+        public string GetVehicleDetails(string i_LicensePlate)
         {
             StringBuilder vehicleDetails = new StringBuilder();
-            vehicleDetails.AppendLine(m_Vehicles[Convert.ToInt32(i_licensePlate)].ToString());
-            vehicleDetails.AppendLine(m_CustomersTickets[Convert.ToInt32(i_licensePlate)].ToString());
-            return vehicleDetails;
+
+            Vehicle vehicle = m_Vehicles[i_LicensePlate.GetHashCode()];
+            CustomerTicket customerTicket = m_CustomersTickets[i_LicensePlate.GetHashCode()];
+
+            vehicleDetails.AppendLine(vehicle.ToString());
+            vehicleDetails.AppendLine(customerTicket.ToString());
+
+            return vehicleDetails.ToString();
         }
 
         public void SetVehicleStatus(string i_LicensePlate, string i_VehicleStatus)
@@ -217,10 +208,5 @@ namespace Ex03.GarageLogic
 
             return supportedVehicles.ToString();
         }
-
-
-
-
-
     }
 }

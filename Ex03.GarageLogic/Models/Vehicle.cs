@@ -16,6 +16,7 @@ namespace Ex03.GarageLogic.Models
         internal IEnumerable<Wheel> Wheels { get; set; }
         internal EnergySource EnergySource { get; set; }
         public float EnergyPercentage => this.EnergySource.EnergyPercentage;
+
         protected Vehicle(int i_NumWheels, float i_WheelMaxPressure)
         {
             Wheels = new LinkedList<Wheel>();
@@ -81,7 +82,7 @@ number of wheels: {4}",
                 LicensePlate,
                 EnergyPercentage,
                 EnergySource,
-                Wheels);
+                Wheels.ElementAt(0));
         }
 
         public override int GetHashCode()

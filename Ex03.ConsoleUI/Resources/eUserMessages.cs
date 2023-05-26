@@ -27,6 +27,8 @@ namespace Ex03.ConsoleUI.Resources
         [Description("Invalid input!")]
         InvalidInputMessage,
         [Description("Press any key to return to the main menu")]
-        PressAnyKeyToReturnToMainMenuMessage
+        PressAnyKeyToReturnToMainMenuMessage,
+        [Description("Please enter {0}:")]
+        EnterPropertyMessage,
     }
 }

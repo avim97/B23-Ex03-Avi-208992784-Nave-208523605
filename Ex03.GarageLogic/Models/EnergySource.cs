@@ -14,6 +14,7 @@ namespace Ex03.GarageLogic.Models
         protected readonly float r_Capacity;
 
         protected EnergySource() { }
+
         protected EnergySource(float i_Capacity)
         {
             m_EnergyAmountLeft = 0;
@@ -76,7 +77,7 @@ namespace Ex03.GarageLogic.Models
 
         public override string ToString()
         {
-            return this.EnergyPercentage.ToString(CultureInfo.InvariantCulture);
+            return string.Empty;
         }
 
         public abstract void UpdateProperties(IDictionary<string, string> i_PropertiesToUpdateDictionary);
@@ -93,12 +94,6 @@ namespace Ex03.GarageLogic.Models
                 propertiesNames.Add(property.Name);
             }
 
-            IEnumerable<string> wheelPropertiesNames = Wheel.GetPropertiesNames();
-
-            foreach (string property in wheelPropertiesNames)
-            {
-                propertiesNames.Add(property);
-            }
             return propertiesNames;
         }
     }

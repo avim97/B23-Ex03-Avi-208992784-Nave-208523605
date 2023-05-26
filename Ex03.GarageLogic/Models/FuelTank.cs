@@ -58,5 +58,15 @@ namespace Ex03.GarageLogic.Models
                 EnergyPercentage = energyPercentageToSet;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+                @"Fuel Amount Left: {0},
+Fuel Type: {1}",
+                CurrentFuelAmount,
+                m_FuelType);
+
+        }
     }
 }

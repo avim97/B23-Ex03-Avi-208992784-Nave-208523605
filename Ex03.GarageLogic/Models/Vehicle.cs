@@ -76,7 +76,7 @@ namespace Ex03.GarageLogic.Models
                 propertiesNames.Add(property);
             }
 
-            IEnumerable<string> energySourcePropertiesNames = this.EnergySource.GetPropertiesNames();
+            IEnumerable<string> energySourcePropertiesNames = EnergySource.GetPropertiesNames();
             foreach (string property in energySourcePropertiesNames)
             {
                 propertiesNames.Add(property);

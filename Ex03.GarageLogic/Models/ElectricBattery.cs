@@ -31,5 +31,12 @@ namespace Ex03.GarageLogic.Models
                 EnergyPercentage = energyPercentageToSet;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+                @"Charging Time Left: {0}",
+                CurrentBatteryAmount);
+        }
     }
 }

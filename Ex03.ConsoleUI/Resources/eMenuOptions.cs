@@ -23,7 +23,7 @@ namespace Ex03.ConsoleUI.Resources
         ChargeVehicle,
         [Description("8. Get vehicle's full details")]
         GetVehicleFullDetail,
-        [Description("6. Exit")]
+        [Description("9. Exit")]
         Exit
     }
 }

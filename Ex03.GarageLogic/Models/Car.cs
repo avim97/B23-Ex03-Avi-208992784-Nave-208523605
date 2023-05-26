@@ -64,7 +64,6 @@ namespace Ex03.GarageLogic.Models
             }
         }
 
-
         public override string ToString()
         {
             return string.Format(

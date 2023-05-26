@@ -352,6 +352,7 @@ namespace Ex03.ConsoleUI.Controller
 
             printMessage(r_GarageManagerService.GetVehicleDetails(licensePlate));
         }
+
         private void inflateAllWheelsToMax()
         {
             string licensePlateNumber = getValidLicensePlate();

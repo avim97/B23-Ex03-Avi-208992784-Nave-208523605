@@ -65,21 +65,18 @@ namespace Ex03.GarageLogic.Models
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
             List<string> propertiesNames = new List<string>();
-
             foreach (PropertyInfo property in properties)
             {
                 propertiesNames.Add(property.Name);
             }
 
             IEnumerable<string> wheelPropertiesNames = Wheel.GetPropertiesNames();
-
             foreach (string property in wheelPropertiesNames)
             {
                 propertiesNames.Add(property);
             }
 
             IEnumerable<string> energySourcePropertiesNames = this.EnergySource.GetPropertiesNames();
-
             foreach (string property in energySourcePropertiesNames)
             {
                 propertiesNames.Add(property);

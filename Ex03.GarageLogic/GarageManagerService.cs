@@ -1,9 +1,8 @@
 ﻿using System;
-using Ex03.GarageLogic.Models;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Reflection;
 using System.Text;
+
+using Ex03.GarageLogic.Models;
 
 namespace Ex03.GarageLogic
 {

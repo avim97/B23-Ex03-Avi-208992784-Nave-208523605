@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 
-
 namespace Ex03.ConsoleUI.Resources
 {
     public enum eMenuOptions

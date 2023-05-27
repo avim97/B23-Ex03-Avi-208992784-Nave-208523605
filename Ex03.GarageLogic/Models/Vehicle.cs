@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic.Models
 {
@@ -92,11 +88,13 @@ namespace Ex03.GarageLogic.Models
 License Plate: {1}
 Energy Percentage: {2}
 Energy Source: {3}
-number of wheels: {4}",
+number of wheels: {4}
+{5}",
                 ModelName,
                 LicensePlate,
                 EnergyPercentage,
                 EnergySource,
+                Wheels.Count,
                 Wheels.ElementAt(0));
         }
 

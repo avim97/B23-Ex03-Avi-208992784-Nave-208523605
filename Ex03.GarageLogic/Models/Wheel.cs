@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
+
 using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.GarageLogic.Models
@@ -56,7 +55,7 @@ namespace Ex03.GarageLogic.Models
         public override string ToString()
         {
             return string.Format(
-                @"WheelManufacturer: {0}
+                @"Wheel Manufacturer: {0}
 Current pressure {1}",
                 WheelManufacturer,
                 WheelCurrentPressure);

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic.Models
 {
@@ -21,7 +17,7 @@ namespace Ex03.GarageLogic.Models
             get => m_LicenseType;
             set
             {
-                if (Enum.TryParse(value, ignoreCase:true, out eLicenseType licenseType))
+                if (Enum.TryParse(value, ignoreCase: true, out eLicenseType licenseType))
                 {
                     m_LicenseType = licenseType.ToString();
                 }

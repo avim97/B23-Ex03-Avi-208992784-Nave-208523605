@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using System;
-
-namespace Ex03.GarageLogic.Models
+﻿namespace Ex03.GarageLogic.Models
 {
     public class CustomerTicket
     {

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using Ex03.GarageLogic.Models;
 
+using Ex03.GarageLogic.Models;
 
 namespace Ex03.GarageLogic
 {

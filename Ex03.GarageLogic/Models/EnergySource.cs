@@ -1,8 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Reflection;
+
 using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.GarageLogic.Models
@@ -28,7 +27,7 @@ namespace Ex03.GarageLogic.Models
             {
                 float energyPercentageLeft;
 
-                if(m_EnergyAmountLeft.Equals(0))
+                if (m_EnergyAmountLeft.Equals(0))
                 {
                     energyPercentageLeft = 0;
                 }
@@ -43,7 +42,7 @@ namespace Ex03.GarageLogic.Models
             {
                 const float k_MaxAmount = 100f;
 
-                if(m_EnergyPercentage + value <= k_MaxAmount)
+                if (m_EnergyPercentage + value <= k_MaxAmount)
                 {
                     m_EnergyAmountLeft += value;
                 }
@@ -61,7 +60,7 @@ namespace Ex03.GarageLogic.Models
             get => m_EnergyAmountLeft;
             set
             {
-                if(m_EnergyAmountLeft + value <= r_Capacity)
+                if (m_EnergyAmountLeft + value <= r_Capacity)
                 {
                     m_EnergyAmountLeft += value;
                 }

@@ -1,10 +1,11 @@
 ﻿using Ex03.GarageLogic;
+using System;
 using System.ComponentModel;
 using System.Reflection;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+
 using Ex03.ConsoleUI.Resources;
 using Ex03.GarageLogic.Models;
 
@@ -264,7 +265,7 @@ namespace Ex03.ConsoleUI.Controller
                         Dictionary<string, string> userInputProperties = new Dictionary<string, string>();
                         isPropertyInputValid = true;
                         string userInput = getInputFromUser(message);
-                        userInputProperties.Add(propertyName, userInput); 
+                        userInputProperties.Add(propertyName, userInput);
 
                         try
                         {
@@ -276,7 +277,7 @@ namespace Ex03.ConsoleUI.Controller
                             isPropertyInputValid = false;
                         }
                     }
-                    while(!isPropertyInputValid);
+                    while (!isPropertyInputValid);
                 }
 
             }

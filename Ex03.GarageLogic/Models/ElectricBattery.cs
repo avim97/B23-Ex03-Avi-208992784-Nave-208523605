@@ -2,7 +2,7 @@
 
 namespace Ex03.GarageLogic.Models
 {
-    internal class ElectricBattery: EnergySource
+    internal class ElectricBattery : EnergySource
     {
         public ElectricBattery() { }
 
